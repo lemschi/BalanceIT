@@ -25,6 +25,7 @@ public class PlayerSript : MonoBehaviour
     private bool isExtremeWind;
     private bool reachedEnd = false;
     private bool windActive;
+    private bool isDead;
     private float angleChange;
     private float windSpeed;
     private int l = 0;
@@ -104,8 +105,9 @@ public class PlayerSript : MonoBehaviour
         animator.SetBool("LevelFinished", reachedEnd);
         animator.SetBool("LevelStarted", levelStarted);
         animator.SetBool("IsMoving", isMoving);
-        animator.SetFloat("AnglePlayerF", angle);
-        animator.SetFloat("TimeUntilDeathF", criticalState/50);
+        animator.SetBool("IsDead", isDead);
+        animator.SetFloat("AnglePlayerF", ropeConPoint.transform.rotation.z);
+        animator.SetFloat("TimeUntilDeathF", (float)criticalState/50);
         animator.SetFloat("WindSpeedF", windSpeed);
     }
 
@@ -113,7 +115,7 @@ public class PlayerSript : MonoBehaviour
     private void FixedUpdate()
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
-        if (ropeConPoint.transform.rotation.z > 0.28 && angle > 0 || ropeConPoint.transform.rotation.z < -0.28 && angle < 0)
+        if (ropeConPoint.transform.rotation.z > 0.28 || ropeConPoint.transform.rotation.z < -0.28)
         { 
             angle= 0;
             criticalState++;
@@ -121,8 +123,11 @@ public class PlayerSript : MonoBehaviour
 
         if (criticalState>=secondsToDie*50)
         {
+            isDead = true;
             aCollider.enabled = false;
         }
+
+        Debug.Log(criticalState);
         //apply external angle changes
         ropeConPoint.transform.Rotate(0, 0, (angle + angleChange) * Time.deltaTime);
 
@@ -142,7 +147,7 @@ public class PlayerSript : MonoBehaviour
         }
 
         if (!reachedEnd && isMoving)
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, endPlatform.transform.position.z), moveSpeed);
+            ropeConPoint.transform.position = Vector3.MoveTowards(ropeConPoint.transform.position, new Vector3(ropeConPoint.transform.position.x, ropeConPoint.transform.position.y, endPlatform.transform.position.z), moveSpeed);
 
 
         //Feature--------------------------------------------------------------Wind--------------------------------------------------------------
@@ -161,10 +166,10 @@ public class PlayerSript : MonoBehaviour
     void ResetPlayer()
     {
         reachedEnd= false;
-        transform.SetLocalPositionAndRotation(new Vector3(0, 1.5f, 0), new Quaternion(0, 0, 0, 0));
+        ropeConPoint.transform.SetLocalPositionAndRotation(startPlatform.transform.position, new Quaternion(0, 0, 0, 0));
+        transform.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), new Quaternion(0, 0, 0, 0));
         angle = 0;
         rBody.freezeRotation = true;
-        ropeConPoint.transform.rotation = Quaternion.Euler(0, 0, 0);
         criticalState= 0;
         aCollider.enabled = true;
     }
