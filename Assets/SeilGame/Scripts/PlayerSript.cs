@@ -96,7 +96,6 @@ public class PlayerSript : MonoBehaviour
             CreateWind(-1);
         }
 
-        //Host fui suppa gmocht simi :3333
 
 
 
@@ -110,7 +109,6 @@ public class PlayerSript : MonoBehaviour
         animator.SetFloat("TimeUntilDeathF", (float)criticalState/50);
         animator.SetFloat("WindSpeedF", windSpeed);
     }
-    //jonny wü komsche dinge fo mir
 
     //50/s
     private void FixedUpdate()
