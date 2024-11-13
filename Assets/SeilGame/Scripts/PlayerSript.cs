@@ -110,6 +110,7 @@ public class PlayerSript : MonoBehaviour
         animator.SetFloat("TimeUntilDeathF", (float)criticalState/50);
         animator.SetFloat("WindSpeedF", windSpeed);
     }
+    //jonny wü komsche dinge fo mir
 
     //50/s
     private void FixedUpdate()
