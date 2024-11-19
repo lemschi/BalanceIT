@@ -48,36 +48,58 @@ public class PlayerSript : MonoBehaviour
     void Update()
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
-        //angle change temporär
-        if (transform.position.y >= 0.5)
+        //angle keyboard
+        if (!MPUScript.streamIsOpen)
         {
-            if (Input.GetKey(KeyCode.D))
+            if (transform.position.y >= 0.5)
             {
-                angle -= 0.2f;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                angle += 0.2f;
-            }
-            else
-            {
-                if (ropeConPoint.transform.rotation.z > 0)
+                if (Input.GetKey(KeyCode.D))
                 {
-                    angle = 0.01f;
+                    angle -= 0.2f;
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    angle += 0.2f;
                 }
                 else
                 {
-                    angle = -0.01f;
+                    if (ropeConPoint.transform.rotation.z > 0)
+                    {
+                        angle = 0.01f;
+                    }
+                    else
+                    {
+                        angle = -0.01f;
+                    }
                 }
             }
+            else
+                angle = 0; //so u dont do looptiloops
+
+            Debug.Log("Keyboard input");
         }
-        else
-            angle = 0; //so u dont do looptiloops
+
+        //angle change board
+        if (MPUScript.streamIsOpen)
+        {
+
+            if (transform.position.y >= 0.5)
+            {
+                angle = MPUScript.mpuDaten[0];
+            }
+        }
+
         //
         //resetConditions
         if (transform.position.y <= -5||Input.GetKeyDown(KeyCode.X))
         {
+            animator.SetBool("LevelRestarted", false);
             ResetPlayer();
+        }
+        //stop movement when dead
+        if (isDead)
+        {
+            isMoving = false;
         }
 
 
@@ -99,7 +121,7 @@ public class PlayerSript : MonoBehaviour
 
 
 
-
+        
         //Animation var setting
         animator.SetBool("LevelFinished", reachedEnd);
         animator.SetBool("LevelStarted", levelStarted);
@@ -126,7 +148,7 @@ public class PlayerSript : MonoBehaviour
             aCollider.enabled = false;
         }
 
-        Debug.Log(criticalState);
+        //Debug.Log(criticalState);
         //apply external angle changes
         ropeConPoint.transform.Rotate(0, 0, (angle + angleChange) * Time.deltaTime);
 
@@ -171,6 +193,9 @@ public class PlayerSript : MonoBehaviour
         rBody.freezeRotation = true;
         criticalState= 0;
         aCollider.enabled = true;
+        isDead = false;
+        //reset animator
+        animator.SetBool("LevelRestarted", true);
     }
 
     private void CreateWind(int multiplier)//multiplier = 1 create Wind, -1 remove wind
@@ -207,8 +232,8 @@ public class PlayerSript : MonoBehaviour
             windSpeed = 0;
         }
 
-        Debug.Log(windSpeed);
-        Debug.Log(angleChange);
+        //Debug.Log(windSpeed);
+        //Debug.Log(angleChange);
     }
 
 }

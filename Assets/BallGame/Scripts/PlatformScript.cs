@@ -43,7 +43,7 @@ public class PlatformScript : MonoBehaviour
         //x y z w
         if (!BallScript.ballFell)
         {
-            plain.transform.rotation = new Quaternion(MPU.qx, MPU.qy, MPU.qz, 0);
+            //plain.transform.rotation = new Quaternion(MPU.qx, MPU.qy, MPU.qz, 0);
         }
     }
 
