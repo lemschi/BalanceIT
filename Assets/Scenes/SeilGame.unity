@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deadZone: 0
   streamIsOpenUnityIsDeppat: 0
+  calibrationIterationsToDo: 500
 --- !u!4 &452592375
 Transform:
   m_ObjectHideFlags: 0
@@ -364,6 +365,8 @@ MonoBehaviour:
   secondsToDie: 5
   windMultiplier: 0
   angle: 0
+  mpuDeaccelerator: 2
+  realAngle: 0
 --- !u!136 &937334394
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -30,6 +30,11 @@ public class PlayerSript : MonoBehaviour
     private float windSpeed;
     private int l = 0;
     private int criticalState;
+
+    //Mpu integration
+    [SerializeField] private float mpuDeaccelerator = 5;
+    [SerializeField] private float realAngle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,10 +87,11 @@ public class PlayerSript : MonoBehaviour
         //angle change board
         if (MPUScript.streamIsOpen)
         {
-
+            realAngle += (float)Math.Round((MPUScript.mpuDaten[1] / mpuDeaccelerator), 1);
+            realAngle = (float)Math.Round(realAngle, 2);
             if (transform.position.y >= 0.5)
             {
-                angle = MPUScript.mpuDaten[0];
+                angle = realAngle;
             }
         }
 
@@ -136,9 +142,25 @@ public class PlayerSript : MonoBehaviour
     private void FixedUpdate()
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
-        if (ropeConPoint.transform.rotation.z > 0.28 || ropeConPoint.transform.rotation.z < -0.28)
-        { 
-            angle= 0;
+        //dass a si ned weiter draht
+        if (ropeConPoint.transform.rotation.z > 0.28)
+        {
+            //ropeConPoint.transform.rotation = Quaternion.Euler(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, 29f);
+            ropeConPoint.transform.rotation = new Quaternion(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, 0.28f, 0);
+
+            if (angle > 0)
+                angle = 0;
+        }
+        if (ropeConPoint.transform.rotation.z < -0.28)
+        {
+            //ropeConPoint.transform.rotation = Quaternion.Euler(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, -29f);
+            ropeConPoint.transform.rotation = new Quaternion(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, -0.28f, 0);
+            if (angle < 0)
+                angle = 0;
+        }
+        //mitzön wie lang er so is
+        if (ropeConPoint.transform.rotation.z > 0.27 || ropeConPoint.transform.rotation.z < -0.27)
+        {
             criticalState++;
         }
 
