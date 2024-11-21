@@ -25,7 +25,7 @@ public class MPUScript : MonoBehaviour
     private bool foundStart;
 
     //calibration
-    [SerializeField] public int calibrationIterationsToDo = 500;
+    [SerializeField] public int calibrationIterationsToDo = 200;
     private int calibrationIterations = 0;
     private float[] calibrationValues = new float[3];
     private bool calibrationFinished = false;
@@ -35,7 +35,6 @@ public class MPUScript : MonoBehaviour
 
 
     void Start()
-
     {
         mpudata_stream.Open(); //Serial data stream wird hergestellt
         streamIsOpen = mpudata_stream.IsOpen;

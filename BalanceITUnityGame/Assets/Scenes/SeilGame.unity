@@ -290,6 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 452592375}
   - component: {fileID: 452592374}
+  - component: {fileID: 452592376}
   m_Layer: 0
   m_Name: MPU
   m_TagString: Untagged
@@ -304,7 +305,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452592373}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2278733d3f0155d48a612c5e847ea129, type: 3}
   m_Name: 
@@ -327,6 +328,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452592376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452592373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0736d307068bb23409cfcde154ff8170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamIsOpenUnityIsDeppat: 0
 --- !u!1 &937334392
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +379,7 @@ MonoBehaviour:
   secondsToDie: 5
   windMultiplier: 0
   angle: 0
-  mpuDeaccelerator: 2
+  mpuAccelerator: 2
   realAngle: 0
 --- !u!136 &937334394
 CapsuleCollider:
@@ -1584,10 +1598,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9ac8b2bd06470479406b7de3d0096a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.02
+  moveSpeed: 0.01
   secondsToDie: 5
   windMultiplier: 0
   angle: 0
+  mpuAccelerator: 2.5
+  realAngle: 0
 --- !u!54 &1981251660
 Rigidbody:
   m_ObjectHideFlags: 0

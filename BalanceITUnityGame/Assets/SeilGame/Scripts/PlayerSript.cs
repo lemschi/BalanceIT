@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PlayerSript : MonoBehaviour
 {
+    //euler 90 = unity 0,7071068 => /127,2792172271572
+
     [SerializeField] private float moveSpeed;
     [SerializeField] private int secondsToDie;
     [SerializeField] private float windMultiplier;
@@ -32,7 +34,7 @@ public class PlayerSript : MonoBehaviour
     private int criticalState;
 
     //Mpu integration
-    [SerializeField] private float mpuDeaccelerator = 5;
+    [SerializeField] private float mpuAccelerator = 2.5f;
     [SerializeField] private float realAngle;
 
     // Start is called before the first frame update
@@ -54,7 +56,7 @@ public class PlayerSript : MonoBehaviour
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
         //angle keyboard
-        if (!MPUScript.streamIsOpen)
+        if (!MPUScriptNew.streamIsOpen)
         {
             if (transform.position.y >= 0.5)
             {
@@ -85,19 +87,30 @@ public class PlayerSript : MonoBehaviour
         }
 
         //angle change board
-        if (MPUScript.streamIsOpen)
+        if (MPUScriptNew.streamIsOpen)
         {
+            /* old shit
             realAngle += (float)Math.Round((MPUScript.mpuDaten[1] / mpuDeaccelerator), 1);
             realAngle = (float)Math.Round(realAngle, 2);
             if (transform.position.y >= 0.5)
             {
                 angle = realAngle;
             }
+            */
+            //get value from onderen script
+            realAngle = MPUScriptNew.mpuDaten[0];
+            //remove standard abweichung
+            realAngle -= 0.4f;
+            //make value into angle ned frogn warum 18.36f is hoid afoch so
+            //realAngle *= 18.36f;
+            //amplifie values
+            realAngle *= mpuAccelerator;
+            angle = realAngle;
         }
 
         //
         //resetConditions
-        if (transform.position.y <= -5||Input.GetKeyDown(KeyCode.X))
+        if (criticalState/50>10 || Input.GetKeyDown(KeyCode.X))
         {
             animator.SetBool("LevelRestarted", false);
             ResetPlayer();
@@ -145,21 +158,31 @@ public class PlayerSript : MonoBehaviour
         //dass a si ned weiter draht
         if (ropeConPoint.transform.rotation.z > 0.28)
         {
-            //ropeConPoint.transform.rotation = Quaternion.Euler(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, 29f);
-            ropeConPoint.transform.rotation = new Quaternion(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, 0.28f, 0);
-
-            if (angle > 0)
+            if (realAngle > 0)
+            {
                 angle = 0;
+                ropeConPoint.transform.rotation = Quaternion.Euler(0, 0, 35.6381f);
+            }
+            else
+            {
+                angle = realAngle;
+            }
+            
         }
         if (ropeConPoint.transform.rotation.z < -0.28)
         {
-            //ropeConPoint.transform.rotation = Quaternion.Euler(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, -29f);
-            ropeConPoint.transform.rotation = new Quaternion(ropeConPoint.transform.rotation.x, ropeConPoint.transform.rotation.y, -0.28f, 0);
-            if (angle < 0)
+            if (realAngle < 0)
+            {
                 angle = 0;
+                ropeConPoint.transform.rotation = Quaternion.Euler(0, 0, -35.6381f);
+            }
+            else
+            {
+                angle = realAngle;
+            }
         }
         //mitzön wie lang er so is
-        if (ropeConPoint.transform.rotation.z > 0.27 || ropeConPoint.transform.rotation.z < -0.27)
+        if (ropeConPoint.transform.rotation.z > 0.28 || ropeConPoint.transform.rotation.z < -0.28)
         {
             criticalState++;
         }
@@ -170,12 +193,11 @@ public class PlayerSript : MonoBehaviour
             aCollider.enabled = false;
         }
 
-        //Debug.Log(criticalState);
         //apply external angle changes
         ropeConPoint.transform.Rotate(0, 0, (angle + angleChange) * Time.deltaTime);
 
         //check if level finished
-        if (transform.position.z == endPlatform.transform.position.z)
+        if (ropeConPoint.transform.position.z == endPlatform.transform.position.z)
         {
             reachedEnd = true;
             isMoving = false;
@@ -194,24 +216,25 @@ public class PlayerSript : MonoBehaviour
 
 
         //Feature--------------------------------------------------------------Wind--------------------------------------------------------------
-        if (windActive)
         {
-            CreateWind(1);
+            if (windActive)
+            {
+                CreateWind(1);
+            }
+            if (!windActive)
+            {
+                CreateWind(-1);
+            }
         }
-        if (!windActive)
-        {
-            CreateWind(-1);
-        }
-
 
     }
 
     void ResetPlayer()
     {
+        Debug.Log("get restetted bitch");
         reachedEnd= false;
         ropeConPoint.transform.SetLocalPositionAndRotation(startPlatform.transform.position, new Quaternion(0, 0, 0, 0));
         transform.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), new Quaternion(0, 0, 0, 0));
-        angle = 0;
         rBody.freezeRotation = true;
         criticalState= 0;
         aCollider.enabled = true;
