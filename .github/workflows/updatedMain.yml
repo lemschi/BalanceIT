@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Globale Umgebungsvariablen hinzugefügt, um Redundanz zu vermeiden
-    env: # Änderung: UNITY-Umgebungsvariablen zentralisiert
+    env:
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
@@ -17,55 +17,69 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - BalanceITUnityGame # Änderung: Korrekte Referenz für den Pfad
+          - BalanceITUnityGame
         testMode:
           - playmode
           - editmode
           - standalone
     
     steps:
-      # 1. Repository Checkout
+      # 1. Runner Disk Cleanup
+      - name: Cleanup disk space
+        run: |
+          sudo rm -rf /mnt/* || true
+          docker system prune --all --force
+          docker volume prune --force
+          
+      # 2. Repository Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      # 2. Unity Library Caching
+      # 3. Unity Library Caching
       - name: Cache Unity Library
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library # Änderung: Richtige Referenz zu `matrix.projectPath`
+          path: ${{ matrix.projectPath }}/Library
           key: Library-${{ matrix.projectPath }}-Windows
-          restore-keys: | # Änderung: Zusätzliche Restore-Keys für bessere Trefferquote
+          restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
             default
 
-      # 3. Unity Tests
+      # 4. Unity Tests
       - name: Run tests
-        id: tests # Änderung: ID hinzugefügt, um Outputs zu referenzieren
+        id: tests
         uses: game-ci/unity-test-runner@v4
         with:
           projectPath: ${{ matrix.projectPath }}
           testMode: ${{ matrix.testMode }}
-          artifactsPath: ${{ matrix.testMode }}-artifacts # Änderung: Syntaxfehler mit Leerzeichen behoben
+          artifactsPath: ${{ matrix.testMode }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
           unityVersion: 2023.2.20f1
 
-      # 4. Build-Schritt (nur bei Erfolg der Tests)
+      # 5. Build-Schritt (nur bei Erfolg der Tests)
       - name: Build project
-        if: success() # Änderung: Bedingte Ausführung des Build-Schritts
+        if: success()
         uses: game-ci/unity-builder@v4
         with:
-          projectPath: ${{ matrix.projectPath }} # Änderung: Einheitliche Nutzung von `matrix.projectPath`
+          projectPath: ${{ matrix.projectPath }}
           targetPlatform: WebGL
           allowDirtyBuild: true
 
-      # 5. Ergebnisse hochladen
+      # 6. Ergebnisse hochladen
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         if: always() # Ergebnisse werden unabhängig vom Teststatus hochgeladen
         with:
           name: Test results for ${{ matrix.testMode }}
-          path: ${{ steps.tests.outputs.artifactsPath }} # Änderung: Outputs korrekt referenziert
+          path: ${{ steps.tests.outputs.artifactsPath }}
+          
+       # 7. Cleanup Build Output
+      - name: Cleanup build output
+        if: always()
+        run: |
+          rm -rf build/*
+          docker volume prune --force
