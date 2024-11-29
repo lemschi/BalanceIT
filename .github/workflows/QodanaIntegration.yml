@@ -1,3 +1,0 @@
-name: Test code Qodana
-
-on: [push, pull_request, workflow_dispatch]
