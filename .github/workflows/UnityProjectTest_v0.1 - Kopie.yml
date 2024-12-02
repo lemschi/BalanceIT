@@ -105,8 +105,8 @@ jobs:
       # 1. Disk Cleanup
       - name: Cleanup disk space
         run: |
-          docker system prune --all --force
-          docker volume prune --force
+          sudo docker system prune --all --force
+          sudo docker volume prune --force
 
       # 2. Repository Checkout
       - name: Checkout repository
