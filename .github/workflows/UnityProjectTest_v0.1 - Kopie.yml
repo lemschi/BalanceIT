@@ -31,6 +31,14 @@ jobs:
           - standalone
 
     steps:
+      # 0. Install Git LFS
+      - name: Install Git LFS
+        run: |
+          sudo apt update
+          sudo apt install -y git-lfs
+          git lfs install
+
+
       # 1. Disk Cleanup
       - name: Cleanup disk space
         run: |
