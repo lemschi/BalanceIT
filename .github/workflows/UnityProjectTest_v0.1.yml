@@ -13,7 +13,7 @@ jobs:
   # Test job for multiple modes
   testAllModes:
     name: Test in ${{ matrix.testMode }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     env:
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
