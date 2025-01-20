@@ -15,7 +15,7 @@ jobs:
         steps:
             - run: |
                 echo "Run ls command..."
-                ls
+                ls ${{ github.workspace }}
     # Testrunner Step
     testrunner:
         name: Testrun
