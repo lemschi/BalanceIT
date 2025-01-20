@@ -15,7 +15,7 @@ jobs:
         steps:
             - run: |
                 echo "Run ls command..."
-                ls ${{ github.workspace }}
+                ls ${{ github.workspace }}/BalanceITUnityGame
     # Testrunner Step
     testrunner:
         name: Testrun
@@ -24,7 +24,7 @@ jobs:
             #LS CMD
             - run: |
                 echo "Run ls command..."
-                ls
+                ls ${{ github.workspace }}/BalanceITUnityGame
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
@@ -55,7 +55,7 @@ jobs:
             #LS CMD
             - run: |
                 echo "Run ls command..."
-                ls
+                ls ${{ github.workspace }}/BalanceITUnityGame
             #Repo Checkout
             - uses: actions/checkout@v4
             #Library Cache
