@@ -9,6 +9,19 @@ on:
     workflow_dispatch: {}
 
 jobs:
+    testrunner:
+        name: runTests
+        runs-on: ubuntu-latest
+        steps:
+            - uses: game-ci/unity-test-runner@v4
+              env:
+                UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                projectPath: BalanceITUnityGame
+                githubToken: ${{ secrets.CIGITHUB_TOKEN }}
+
     build:
         name: ${{ matrix.target-platform  }}
         runs-on: ${{  matrix.os  }}
@@ -32,7 +45,6 @@ jobs:
               with:
                 name: ${{  matrix.target-platform  }}
                 path: build/${{  matrix.target-platform  }}
-
         strategy:
             matrix:
                 unity-version:
