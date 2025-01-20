@@ -16,7 +16,7 @@
 * Devops & Website: Jonathan Lemmerer
 
 ## License
-newStandaloneTestOnly.yml
+
 ## Badges & Technologies
 
 * [![Qodana](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml)
