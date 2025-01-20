@@ -13,9 +13,9 @@ jobs:
         name: Test123
         runs-on: ubuntu-latest
         steps:
-            - run: print(ls)
-            - run: print(ls ${{ github.workspace }})
-            - run: print(ls ${{ github.workspace }}/BalanceITUnityGame)
+            - run: $ echo $(ls)
+            - run: $ echo $(ls ${{ github.workspace }})
+            - run: $ echo $(ls ${{ github.workspace }}/BalanceITUnityGame)
     # Testrunner Step
     testrunner:
         name: Testrun
