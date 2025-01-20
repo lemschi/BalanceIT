@@ -13,6 +13,10 @@ jobs:
         name: Testrun
         runs-on: ubuntu-latest
         steps:
+            #LS CMD
+            - run: |
+                echo "Run ls command..."
+                ls
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
