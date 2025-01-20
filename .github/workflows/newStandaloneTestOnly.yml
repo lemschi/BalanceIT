@@ -13,18 +13,14 @@ jobs:
         name: Test123
         runs-on: ubuntu-latest
         steps:
-            - run: ls
-            - run: ls ${{ github.workspace }}
-            - run: ls ${{ github.workspace }}/BalanceITUnityGame
+            - run: print(ls)
+            - run: print(ls ${{ github.workspace }})
+            - run: print(ls ${{ github.workspace }}/BalanceITUnityGame)
     # Testrunner Step
     testrunner:
         name: Testrun
         runs-on: ubuntu-latest
         steps:
-            #LS CMD
-            - run: |
-                echo "Run ls command..."
-                ls ${{ github.workspace }}
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
@@ -55,10 +51,6 @@ jobs:
         needs: testrunner
         if: success()
         steps:
-            #LS CMD
-            - run: |
-                echo "Run ls command..."
-                ls ${{ github.workspace }}/BalanceITUnityGame
             #Repo Checkout
             - uses: actions/checkout@v4
             #Library Cache
