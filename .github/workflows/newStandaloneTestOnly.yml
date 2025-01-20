@@ -41,8 +41,8 @@ jobs:
         if: success()
         steps:
             #LS CMD
-            - uses: |
-                run "ls
+            - run: |
+                "ls
             #Repo Checkout
             - uses: actions/checkout@v4
             #Library Cache
