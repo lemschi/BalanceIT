@@ -1,24 +1,47 @@
 name: CI - New Standalone Test
 
 on:
-    workflow_dispatch:
+    push:
+        paths:
+            - 'BalanceITUnityGame/Assets/**'
+            - 'BalanceITUnityGame/Packages/**'
+            - 'BalanceITUnityGame/ProjectSettings/**'
+    workflow_dispatch: {}
 
 jobs:
-    buildForLinux:
-        runs-on: ubuntu-latest
+    build:
+        name: ${{ matrix.target-platform  }}
+        runs-on: ${{  matrix.os  }}
         steps:
             - uses: actions/checkout@v4
+            - uses: actions/cache@v4
+              with:
+                path: BalanceITGame/Library
+                key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
             - uses: game-ci/unity-builder@v4
               env:
                 UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
                 with:
-                targetPlatform: StandaloneLinux64
+                targetPlatform: ${{  matrix.target-platform  }}
                 projectPath: BalanceITUnityGame
-                unityVersion: 2023.2.20f1
+                unityVersion: ${{  matrix.unity-version  }}
                 buildName: BalanceItGame
             - uses: actions/upload-artifact@v4
               with:
-                name: StandAloneLinux64
-                path: build/StandAloneLinux64
+                name: ${{  matrix.target-platform  }}
+                path: build/${{  matrix.target-platform  }}
+
+        strategy:
+            matrix:
+                unity-version:
+                    - 2023.2.20f1
+                os:
+                    - ubuntu-latest
+                    - windows-latest
+                include:
+                    - os: ubuntu-latest
+                      target-platform: StandaloneLinux64
+                    - os: windows-latest
+                      target-platform: StandaloneWindows64
