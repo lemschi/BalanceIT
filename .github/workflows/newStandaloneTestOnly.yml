@@ -42,7 +42,8 @@ jobs:
         steps:
             #LS CMD
             - run: |
-                "ls
+                echo "Run ls command..."
+                ls
             #Repo Checkout
             - uses: actions/checkout@v4
             #Library Cache
