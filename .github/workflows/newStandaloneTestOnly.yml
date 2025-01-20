@@ -3,9 +3,9 @@ name: CI - New Standalone Test
 on:
     push:
         paths:
-            - 'BalanceIT/BalanceITUnityGame/Assets/**'
-            - 'BalanceIT/BalanceITUnityGame/Packages/**'
-            - 'BalanceIT/BalanceITUnityGame/ProjectSettings/**'
+            - 'BalanceITUnityGame/Assets/**'
+            - 'BalanceITUnityGame/Packages/**'
+            - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
     # Testrunner Step
@@ -22,7 +22,7 @@ jobs:
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                projectPath: BalanceIT/BalanceITUnityGame/
+                projectPath: BalanceITUnityGame/
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
                 testmode: standalone
                 artifactsPath: standalone-artifacts
@@ -40,12 +40,15 @@ jobs:
         needs: testrunner
         if: success()
         steps:
+            #LS CMD
+            - uses: |
+                run "ls
             #Repo Checkout
             - uses: actions/checkout@v4
             #Library Cache
             - uses: actions/cache@v4
               with:
-                path: BalanceIT/BalanceITUnityGame/Library
+                path: BalanceITUnityGame/Library
                 key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
             #Builder Step
             - uses: game-ci/unity-builder@v4
@@ -55,7 +58,7 @@ jobs:
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
                 with:
                 targetPlatform: ${{  matrix.target-platform  }}
-                projectPath: BalanceIT/BalanceITUnityGame
+                projectPath: BalanceITUnityGame
                 unityVersion: ${{  matrix.unity-version  }}
                 buildName: BalanceITUnityGameBuild
             #Artifactupload
