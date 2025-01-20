@@ -40,11 +40,14 @@ jobs:
         needs: testrunner
         if: success()
         steps:
+            #Repo Checkout
             - uses: actions/checkout@v4
+            #Library Cache
             - uses: actions/cache@v4
               with:
                 path: BalanceIT/BalanceITUnityGame/Library
                 key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
+            #Builder Step
             - uses: game-ci/unity-builder@v4
               env:
                 UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -55,6 +58,7 @@ jobs:
                 projectPath: BalanceIT/BalanceITUnityGame
                 unityVersion: ${{  matrix.unity-version  }}
                 buildName: BalanceITUnityGameBuild
+            #Artifactupload
             - uses: actions/upload-artifact@v4
               with:
                 name: ${{  matrix.target-platform  }}
