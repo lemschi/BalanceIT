@@ -8,14 +8,23 @@ on:
             - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
-    #Test123
-    Test123:
-        name: Test123
+    #Test1
+    Test1:
+        name: Test1
         runs-on: ubuntu-latest
         steps:
             - run: ls
             - run: ls ${{ github.workspace }}
             - run: ls ${{ github.workspace }}/BalanceITUnityGame
+    #Test2
+    Test2:
+        name: Test2
+        runs-on: ubuntu-latest
+        steps:
+            - name: test
+              run: ls
+            - name: test2 
+              run: ls ${{ github.workspace }}
     # Testrunner Step
     testrunner:
         name: Testrun
