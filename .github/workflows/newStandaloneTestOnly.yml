@@ -8,6 +8,14 @@ on:
             - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
+    #Test123
+    Test123:
+        name: Test123
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                echo "Run ls command..."
+                ls
     # Testrunner Step
     testrunner:
         name: Testrun
