@@ -25,6 +25,9 @@ jobs:
             - run: |
                 echo "Run ls command..."
                 ls ${{ github.workspace }}
+            #Repo Checkout
+            - name: Checkout Repo
+              uses: actions/checkout@v4
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
