@@ -16,7 +16,7 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/cache@v4
               with:
-                path: BalanceITGame/Library
+                path: BalanceITUnityGame/Library
                 key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
             - uses: game-ci/unity-builder@v4
               env:
@@ -27,7 +27,7 @@ jobs:
                 targetPlatform: ${{  matrix.target-platform  }}
                 projectPath: BalanceITUnityGame
                 unityVersion: ${{  matrix.unity-version  }}
-                buildName: BalanceItGame
+                buildName: BalanceItUnityGame
             - uses: actions/upload-artifact@v4
               with:
                 name: ${{  matrix.target-platform  }}
@@ -37,6 +37,7 @@ jobs:
             matrix:
                 unity-version:
                     - 2023.2.20f1
+                    - auto
                 os:
                     - ubuntu-latest
                     - windows-latest
