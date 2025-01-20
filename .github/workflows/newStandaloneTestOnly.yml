@@ -7,13 +7,16 @@ on:
             - 'BalanceITUnityGame/Packages/**'
             - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
-
 jobs:
+    # Testrunner Step
     testrunner:
-        name: runTests
+        name: Testrun
         runs-on: ubuntu-latest
         steps:
-            - uses: game-ci/unity-test-runner@v4
+            #StandaloneTest Runnen mit GameCI
+            - name: Run StandaloneTest
+              id: standalone
+              uses: game-ci/unity-test-runner@v4
               env:
                 UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -21,10 +24,21 @@ jobs:
               with:
                 projectPath: BalanceITUnityGame
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
-
-    build:
+                testmode: standalone
+                artifactsPath: standalone-artifacts
+            #TestResults uploaden
+            - name: Upload Test Result
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                name: Test results for StandaloneTest
+                path: standalone-artifacts
+    # Build Step
+    buildProject:
         name: ${{ matrix.target-platform  }}
         runs-on: ${{  matrix.os  }}
+        needs: testrunner
+        if: success()
         steps:
             - uses: actions/checkout@v4
             - uses: actions/cache@v4
