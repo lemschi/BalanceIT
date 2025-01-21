@@ -27,7 +27,7 @@ jobs:
               with:
                 projectPath: BalanceITUnityGame
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
-                testmode: standalone
+                #testmode: standalone
                 artifactsPath: standalone-artifacts
             #TestResults uploaden
             - name: Upload Test Result
