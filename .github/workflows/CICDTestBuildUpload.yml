@@ -16,7 +16,7 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
-            #StandaloneTest Runnen mit GameCI
+            #Tests Runnen mit GameCI
             - name: Run ${{  matrix.testMode }}
               id: testrun
               uses: game-ci/unity-test-runner@v4
@@ -27,7 +27,7 @@ jobs:
               with:
                 projectPath: BalanceITUnityGame
                 githubToken: ${{ secrets.GITHUB_TOKEN }}
-                testmode: ${{ matrix.testMode  }}
+                testMode: ${{ matrix.testMode  }}
                 artifactsPath: ${{  matrix.testMode  }}-artifacts
             #TestResults uploaden
             - name: Upload Test Result
