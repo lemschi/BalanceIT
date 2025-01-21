@@ -8,7 +8,7 @@ public class PlatformScript : MonoBehaviour
     private GameObject plain;
     private GameObject plain2;
 
-    public UnityEditor.Presets.DefaultPreset Platform;
+    //public UnityEditor.Presets.DefaultPreset Platform;
     // Start is called before the first frame update
     void Start()
     {
