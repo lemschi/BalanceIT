@@ -33,6 +33,10 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
+              with:
+                repository: ${{ github.repository }}
+                path: ${{ github.workspace }}/BalanceITUnityGame
+
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
