@@ -77,10 +77,10 @@ jobs:
                     - 2023.2.20f1
                     - auto
                 os:
-                    - ubuntu-latest
+                    #- ubuntu-latest
                     - windows-latest
                 include:
-                    - os: ubuntu-latest
-                      target-platform: StandaloneLinux64
+                    #- os: ubuntu-latest
+                    #  target-platform: StandaloneLinux64
                     - os: windows-latest
                       target-platform: StandaloneWindows64
