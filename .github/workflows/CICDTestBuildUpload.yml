@@ -82,4 +82,4 @@ jobs:
                     - os: ubuntu-latest
                       target-platform: StandaloneLinux64
                     - os: windows-latest
-                      target-platform: WebGL
+                      target-platform: StandaloneWindows64
