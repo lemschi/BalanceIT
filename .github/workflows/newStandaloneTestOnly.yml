@@ -15,7 +15,6 @@ jobs:
         steps:
             - run: ls
             - run: ls ${{ github.workspace }}
-            - run: ls ${{ github.workspace }}/BalanceITUnityGame
             - run: ls BalanceITUnityGame
             - run: ls BalanceIT
     #Test2
