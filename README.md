@@ -18,7 +18,7 @@
 ## License
 
 ## Badges & Technologies
-* [![CI/CD - Test - Build - Upload](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml)
+* [![CI/CD - Test - Build - Deploy](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml)
 
 * [![CI/CD - TestrunnerOnlyTest](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTest.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTest.yml)
 * [![CI/CD - BuildOnlyTest](https://github.com/lemschi/BalanceIT/actions/workflows/CICDBuild.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDBuild.yml)
