@@ -1,11 +1,8 @@
-name: CI/CD - DeployOnly
+name: CI/CD - DeployOnly - NOTWORKING
 
 on:
     push:
         paths:
-            - 'BalanceITUnityGame/Assets/**'
-            - 'BalanceITUnityGame/Packages/**'
-            - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
     buildProject:

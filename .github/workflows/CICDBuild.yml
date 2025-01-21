@@ -3,11 +3,9 @@ name: CI/CD - BuildOnly
 on:
     push:
         paths:
-            - 'BalanceITUnityGame/Assets/**'
-            - 'BalanceITUnityGame/Packages/**'
-            - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
+    #Build Step
     buildProject:
         name: BuildWebGL
         runs-on: ubuntu-latest

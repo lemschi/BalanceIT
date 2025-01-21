@@ -3,39 +3,38 @@ name: CI/CD - TestOnly
 on:
     push:
         paths:
-            - 'BalanceITUnityGame/Assets/**'
-            - 'BalanceITUnityGame/Packages/**'
-            - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
-    buildProject:
-        name: BuildWebGL
+    # Testrunner Step
+    testProject:
+        name: Testrun Ubuntu
         runs-on: ubuntu-latest
         steps:
             #Repo Checkout
-            - uses: actions/checkout@v4
-            #Library Cache
-            - uses: actions/cache@v4
-              with:
-                path: BalanceITUnityGame/Library
-                key: Library-2023.2.20f1-${{  matrix.target-platform  }}
-            #Builder Step
-            - uses: game-ci/unity-builder@v4
+            - name: Checkout Repo
+              uses: actions/checkout@v4
+            #Tests Runnen mit GameCI
+            - name: Run ${{  matrix.testMode }}
+              id: testrun
+              uses: game-ci/unity-test-runner@v4
               env:
                 UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-                with:
-                targetPlatform: ${{  matrix.target-platform  }}
-                projectPath: BalanceITUnityGame
-                unityVersion: 2023.2.20f1
-                buildName: BalanceITUnityGameBuild
-            #Artifactupload
-            - uses: actions/upload-artifact@v4
               with:
-                name: ${{  matrix.target-platform  }}
-                path: build/${{  matrix.target-platform  }}
+                projectPath: BalanceITUnityGame
+                githubToken: ${{ secrets.GITHUB_TOKEN }}
+                testMode: ${{ matrix.testMode  }}
+                artifactsPath: ${{  matrix.testMode  }}-artifacts
+            #TestResults uploaden
+            - name: Upload Test Result
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                name: Test results for ${{  matrix.testMode  }}
+                path: ${{ matrix.testMode  }}-artifacts
         strategy:
             matrix:
-                target-platform: 
-                    - WebGL
+                testMode:
+                    - PlayMode
+                    - EditMode
