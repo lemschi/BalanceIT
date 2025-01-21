@@ -10,6 +10,8 @@ jobs:
         steps:
             #Repo Checkout
             - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
             #Library Cache
             - uses: actions/cache@v4
               with:
@@ -32,6 +34,7 @@ jobs:
                 name: ${{  matrix.target-platform  }}
                 path: build/${{  matrix.target-platform  }}
         strategy:
+            fail-fast: false 
             matrix:
                 target-platform: 
                     - StandaloneWindows
