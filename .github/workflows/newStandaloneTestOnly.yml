@@ -9,16 +9,16 @@ on:
     workflow_dispatch: {}
 jobs:
     # Testrunner Step
-    testrunner:
-        name: Testrun
+    testProject:
+        name: Testrun Ubuntu
         runs-on: ubuntu-latest
         steps:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
             #StandaloneTest Runnen mit GameCI
-            - name: Run StandaloneTest
-              id: standalone
+            - name: Run Editmode & Playmode
+              id: testrun
               uses: game-ci/unity-test-runner@v4
               env:
                 UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -26,21 +26,26 @@ jobs:
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                 projectPath: BalanceITUnityGame
-                githubToken: ${{ secrets.CIGITHUB_TOKEN }}
-                #testmode: standalone
-                artifactsPath: standalone-artifacts
+                githubToken: ${{ secrets.GITHUB_TOKEN }}
+                testmode: ${{ matrix.testMode  }}
+                artifactsPath: ${{  matrix.testMode  }}-artifacts
             #TestResults uploaden
             - name: Upload Test Result
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: Test results for StandaloneTest
-                path: standalone-artifacts
+                name: Test results for ${{  matrix.testMode  }}
+                path: ${{ matrix.testMode  }}-artifacts
+        strategy:
+            matrix:
+                testMode:
+                    - PlayMode
+                    - EditMode
     # Build Step
     buildProject:
         name: ${{ matrix.target-platform  }}
         runs-on: ${{  matrix.os  }}
-        needs: testrunner
+        needs: testProject
         if: success()
         steps:
             #Repo Checkout
@@ -72,10 +77,10 @@ jobs:
                     - 2023.2.20f1
                     - auto
                 os:
-                    #- ubuntu-latest
+                    - ubuntu-latest
                     - windows-latest
                 include:
-                    #- os: ubuntu-latest
-                    #  target-platform: StandaloneLinux64
+                    - os: ubuntu-latest
+                      target-platform: StandaloneLinux64
                     - os: windows-latest
                       target-platform: StandaloneWindows64
