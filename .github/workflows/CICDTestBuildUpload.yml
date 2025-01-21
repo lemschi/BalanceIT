@@ -10,7 +10,7 @@ on:
 jobs:
     # Testrunner Step
     testProject:
-        name: TestRun Ubuntu
+        name: Testrun Ubuntu
         runs-on: ubuntu-latest
         steps:
             #Repo Checkout
