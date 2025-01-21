@@ -1,4 +1,4 @@
-name: CI/CD - TestAll
+name: CI/CD - BuildOnly
 
 on:
     push:

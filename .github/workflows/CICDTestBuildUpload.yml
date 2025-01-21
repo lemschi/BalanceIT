@@ -1,4 +1,4 @@
-name: CI/CD - TestAll
+name: CI/CD - Test - Build - Upload
 
 on:
     push:
