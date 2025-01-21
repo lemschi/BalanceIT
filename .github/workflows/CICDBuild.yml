@@ -34,4 +34,5 @@ jobs:
         strategy:
             matrix:
                 target-platform: 
-                    - WebGL
+                    - StandaloneWindows
+                    - StandaloneWindows64
