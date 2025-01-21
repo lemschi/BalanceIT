@@ -16,6 +16,8 @@ jobs:
             - run: ls
             - run: ls ${{ github.workspace }}
             - run: ls ${{ github.workspace }}/BalanceITUnityGame
+            - run: ls BalanceITUnityGame
+            - run: ls BalanceIT
     #Test2
     Test2:
         name: Test2
@@ -35,7 +37,7 @@ jobs:
               uses: actions/checkout@v4
               with:
                 repository: ${{ github.repository }}
-                path: ${{ github.workspace }}/BalanceITUnityGame
+                path: BalanceITUnityGame
 
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
@@ -46,7 +48,7 @@ jobs:
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                projectPath: ${{ github.workspace }}/BalanceITUnityGame
+                projectPath: BalanceITUnityGame
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
                 testmode: standalone
                 artifactsPath: standalone-artifacts
@@ -69,7 +71,7 @@ jobs:
             #Library Cache
             - uses: actions/cache@v4
               with:
-                path: ${{ github.workspace }}/BalanceITUnityGame/Library
+                path: BalanceITUnityGame/Library
                 key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
             #Builder Step
             - uses: game-ci/unity-builder@v4
@@ -79,7 +81,7 @@ jobs:
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
                 with:
                 targetPlatform: ${{  matrix.target-platform  }}
-                projectPath: ${{ github.workspace }}/BalanceITUnityGame
+                projectPath: BalanceITUnityGame
                 unityVersion: ${{  matrix.unity-version  }}
                 buildName: BalanceITUnityGameBuild
             #Artifactupload
