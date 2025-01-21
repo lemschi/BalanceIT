@@ -80,6 +80,6 @@ jobs:
                     - windows-latest
                 include:
                     - os: ubuntu-latest
-                      target-platform: StandaloneLinux64
+                      target-platform: WebGL
                     - os: windows-latest
-                      target-platform: StandaloneWindows64
+                      target-platform: WebGL
