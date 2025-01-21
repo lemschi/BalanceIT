@@ -1,0 +1,49 @@
+name: CI/CD - TestAll
+
+on:
+    push:
+        paths:
+            - 'BalanceITUnityGame/Assets/**'
+            - 'BalanceITUnityGame/Packages/**'
+            - 'BalanceITUnityGame/ProjectSettings/**'
+    workflow_dispatch: {}
+jobs:
+    buildProject:
+        name: ${{ matrix.target-platform  }}-Build
+        runs-on: ${{  matrix.os  }}
+        steps:
+            #Repo Checkout
+            - uses: actions/checkout@v4
+            #Library Cache
+            - uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
+            #Builder Step
+            - uses: game-ci/unity-builder@v4
+              env:
+                UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+                with:
+                targetPlatform: ${{  matrix.target-platform  }}
+                projectPath: BalanceITUnityGame
+                unityVersion: ${{  matrix.unity-version  }}
+                buildName: BalanceITUnityGameBuild
+            #Artifactupload
+            - uses: actions/upload-artifact@v4
+              with:
+                name: ${{  matrix.target-platform  }}
+                path: build/${{  matrix.target-platform  }}
+        strategy:
+            matrix:
+                unity-version:
+                    - 2023.2.20f1
+                os:
+                    - ubuntu-latest
+                    - windows-latest
+                include:
+                    - os: ubuntu-latest
+                      target-platform: WebGL
+                    - os: windows-latest
+                      target-platform: WebGL
