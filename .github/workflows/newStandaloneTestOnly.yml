@@ -1,4 +1,4 @@
-name: CI - New Standalone Test
+name: CI/CD - TestAll
 
 on:
     push:
@@ -10,14 +10,14 @@ on:
 jobs:
     # Testrunner Step
     testProject:
-        name: Testrun Ubuntu
+        name: TestRun Ubuntu
         runs-on: ubuntu-latest
         steps:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
             #StandaloneTest Runnen mit GameCI
-            - name: Run Editmode & Playmode
+            - name: Run ${{  matrix.testMode }}
               id: testrun
               uses: game-ci/unity-test-runner@v4
               env:
@@ -43,7 +43,7 @@ jobs:
                     - EditMode
     # Build Step
     buildProject:
-        name: ${{ matrix.target-platform  }}
+        name: ${{ matrix.target-platform  }}-Build
         runs-on: ${{  matrix.os  }}
         needs: testProject
         if: success()
@@ -75,7 +75,6 @@ jobs:
             matrix:
                 unity-version:
                     - 2023.2.20f1
-                    - auto
                 os:
                     - ubuntu-latest
                     - windows-latest
