@@ -41,8 +41,8 @@ jobs:
                 testMode:
                     - PlayMode
                     - EditMode
-    # Build Step
-    buildProject:
+    # Build Step Windows & Linux
+    buildWindowsAndLinux:
         name: ${{ matrix.target-platform  }}-Build
         runs-on: ${{  matrix.os  }}
         needs: testProject
@@ -83,3 +83,60 @@ jobs:
                       target-platform: StandaloneLinux64
                     - os: windows-latest
                       target-platform: StandaloneWindows64
+    #Build Step WebGL
+    buildWebGL:
+      name: Build ${{  matrix.target-platform  }}
+      runs-on: ubuntu-latest
+      needs: testProject
+      steps:
+          #Repo Checkout
+          - uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+          #Library Cache
+          - uses: actions/cache@v4
+            with:
+              path: BalanceITUnityGame/Library
+              key: Library-2023.2.20f1-${{  matrix.target-platform  }}
+          #Builder Step
+          - uses: game-ci/unity-builder@v4
+            env:
+              UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+              UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+              UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+            with:
+              targetPlatform: ${{  matrix.target-platform  }}
+              projectPath: BalanceITUnityGame
+              unityVersion: 2023.2.20f1
+              buildName: BalanceITUnityGameBuild
+          #Artifactupload
+          - uses: actions/upload-artifact@v4
+            with:
+              name: ${{  matrix.target-platform  }}-build
+              path: build/${{  matrix.target-platform  }}
+      strategy:
+          fail-fast: false 
+          matrix:
+              target-platform: 
+                  - WebGL
+    #DeployWebGLBuildToPages
+    deployToPages:
+      name: Deploy to Github Pages
+      needs: buildWebGL
+      runs-on: ubuntu-latest
+      steps:
+        #Checkout Repository
+        - name: Checkout Code
+          uses: actions/checkout@v4
+        #Download Artifacts
+        - name: Download Artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: WebGL-build
+            path: build/WebGL
+        #Deploy Step
+        - name: Deploy to Pages
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+            branch: gh-pages
+            folder: build/WebGL
