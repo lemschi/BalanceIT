@@ -1,0 +1,25 @@
+name: CI/CD - DeployOnlyTest
+
+on:
+    workflow_dispatch: {}
+jobs:
+    #DeployWebGLBuildToPages
+    deployToPages:
+      name: Deploy to Github Pages
+      runs-on: ubuntu-latest
+      steps:
+        #Checkout Repository
+        - name: Checkout Code
+          uses: actions/checkout@v4
+        #Download Artifacts
+        - name: Download Artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: WebGL-build
+            path: build/WebGL
+        #Deploy Step
+        - name: Deploy to Pages
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+            branch: gh-pages
+            folder: build/WebGL

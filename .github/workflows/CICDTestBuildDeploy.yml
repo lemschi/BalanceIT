@@ -1,0 +1,142 @@
+name: CI/CD - Test - Build - Upload
+
+on:
+    push:
+        paths:
+            - 'BalanceITUnityGame/Assets/**'
+            - 'BalanceITUnityGame/Packages/**'
+            - 'BalanceITUnityGame/ProjectSettings/**'
+    workflow_dispatch: {}
+jobs:
+    # Testrunner Step
+    testProject:
+        name: Testrun Ubuntu
+        runs-on: ubuntu-latest
+        steps:
+            #Repo Checkout
+            - name: Checkout Repo
+              uses: actions/checkout@v4
+            #Tests Runnen mit GameCI
+            - name: Run ${{  matrix.testMode }}
+              id: testrun
+              uses: game-ci/unity-test-runner@v4
+              env:
+                UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                projectPath: BalanceITUnityGame
+                githubToken: ${{ secrets.GITHUB_TOKEN }}
+                testMode: ${{ matrix.testMode  }}
+                artifactsPath: ${{  matrix.testMode  }}-artifacts
+            #TestResults uploaden
+            - name: Upload Test Result
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                name: Test results for ${{  matrix.testMode  }}
+                path: ${{ matrix.testMode  }}-artifacts
+        strategy:
+            matrix:
+                testMode:
+                    - PlayMode
+                    - EditMode
+    # Build Step Windows & Linux
+    buildWindowsAndLinux:
+        name: ${{ matrix.target-platform  }}-Build
+        runs-on: ${{  matrix.os  }}
+        needs: testProject
+        if: success()
+        steps:
+            #Repo Checkout
+            - uses: actions/checkout@v4
+            #Library Cache
+            - uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
+            #Builder Step
+            - uses: game-ci/unity-builder@v4
+              env:
+                UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+                with:
+                targetPlatform: ${{  matrix.target-platform  }}
+                projectPath: BalanceITUnityGame
+                unityVersion: ${{  matrix.unity-version  }}
+                buildName: BalanceITUnityGameBuild
+            #Artifactupload
+            - uses: actions/upload-artifact@v4
+              with:
+                name: ${{  matrix.target-platform  }}
+                path: build/${{  matrix.target-platform  }}
+        strategy:
+            matrix:
+                unity-version:
+                    - 2023.2.20f1
+                os:
+                    - ubuntu-latest
+                    - windows-latest
+                include:
+                    - os: ubuntu-latest
+                      target-platform: StandaloneLinux64
+                    - os: windows-latest
+                      target-platform: StandaloneWindows64
+    #Build Step WebGL
+    buildWebGL:
+      name: Build ${{  matrix.target-platform  }}
+      runs-on: ubuntu-latest
+      needs: testProject
+      steps:
+          #Repo Checkout
+          - uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+          #Library Cache
+          - uses: actions/cache@v4
+            with:
+              path: BalanceITUnityGame/Library
+              key: Library-2023.2.20f1-${{  matrix.target-platform  }}
+          #Builder Step
+          - uses: game-ci/unity-builder@v4
+            env:
+              UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+              UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+              UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+            with:
+              targetPlatform: ${{  matrix.target-platform  }}
+              projectPath: BalanceITUnityGame
+              unityVersion: 2023.2.20f1
+              buildName: BalanceITUnityGameBuild
+          #Artifactupload
+          - uses: actions/upload-artifact@v4
+            with:
+              name: ${{  matrix.target-platform  }}-build
+              path: build/${{  matrix.target-platform  }}
+      strategy:
+          fail-fast: false 
+          matrix:
+              target-platform: 
+                  - WebGL
+    #DeployWebGLBuildToPages
+    deployToPages:
+      name: Deploy to Github Pages
+      needs: buildWebGL
+      runs-on: ubuntu-latest
+      steps:
+        #Checkout Repository
+        - name: Checkout Code
+          uses: actions/checkout@v4
+        #Download Artifacts
+        - name: Download Artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: WebGL-build
+            path: build/WebGL
+        #Deploy Step
+        - name: Deploy to Pages
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+            branch: gh-pages
+            folder: build/WebGL

@@ -1,0 +1,130 @@
+name: Test Unity Project improved cleanup
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  # push:
+  #  branches: # Specify your branches here
+  #    - main # The 'main' branch
+      #- master # The 'master' branch
+      #- 'releases/*' # The release branches
+
+jobs:
+  # Test job for multiple modes
+  testAllModes:
+    name: Test in ${{ matrix.testMode }}
+    runs-on: ubuntu-latest
+
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - BalanceITUnityGame
+        testMode:
+          - playmode
+          - editmode
+          - standalone
+
+    steps:
+      # 0. Install Git LFS
+      - name: Install Git LFS
+        run: |
+          sudo apt update
+          sudo apt install -y git-lfs
+          git lfs install
+          
+      # 1. Disk Cleanup
+      - name: Cleanup disk space
+        run: |
+          echo "Starting cleanup..."
+          if docker info > /dev/null 2>&1; then
+            echo "Docker is accessible. Pruning..."
+            docker system prune --all --force || echo "Docker system prune failed"
+            docker volume prune --force || echo "Docker volume prune failed"
+          else
+            echo "Docker is not running or accessible"
+          fi
+          echo "Cleaning directories..."
+          sudo [ -d /mnt ] && sudo rm -rf /mnt/* || echo "/mnt does not exist"
+          sudo [ -d ~/.cache/unity3d ] && sudo rm -rf ~/.cache/unity3d || echo "~/.cache/unity3d does not exist"
+          echo "Cleanup complete."
+
+      # 2. Repository Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # 3. Unity Library Caching (exclude standalone)
+      - name: Cache Unity Library
+        if: matrix.testMode != 'standalone'
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.testMode }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
+            default
+
+      # 4. Run Unity Tests
+      - name: Run tests
+        id: tests
+        uses: game-ci/unity-test-runner@v4
+        with:
+          projectPath: ${{ matrix.projectPath }}
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: ${{ matrix.testMode }}-artifacts
+
+      # 5. Upload Test Results
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Test results for ${{ matrix.testMode }}
+          path: ${{ matrix.testMode }}-artifacts
+
+  # Build job (depends on all tests completing successfully)
+  buildProject:
+    name: Build project
+    runs-on: ubuntu-latest
+    needs: testAllModes # This ensures the build runs only after tests
+    if: success()       # Only run if all dependent jobs succeed
+
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+    steps:
+      # 1. Disk Cleanup
+      - name: Cleanup disk space
+        run: |
+          sudo docker system prune --all --force
+          sudo docker volume prune --force
+
+      # 2. Repository Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # 3. Build Project
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        with:
+          projectPath: BalanceITUnityGame
+          targetPlatform: WebGL
+          allowDirtyBuild: true
+
+      # 4. Cleanup Build Output
+      - name: Cleanup build output
+        if: always()
+        run: |
+          rm -rf build/*
+          docker volume prune --force

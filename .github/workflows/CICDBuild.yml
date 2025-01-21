@@ -1,0 +1,40 @@
+name: CI/CD - BuildOnlyTest
+
+on:
+    workflow_dispatch: {}
+jobs:
+    #Build Step
+    buildProject:
+        name: Build ${{  matrix.target-platform  }}
+        runs-on: ubuntu-latest
+        steps:
+            #Repo Checkout
+            - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+            #Library Cache
+            - uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-2023.2.20f1-${{  matrix.target-platform  }}
+            #Builder Step
+            - uses: game-ci/unity-builder@v4
+              env:
+                UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                targetPlatform: ${{  matrix.target-platform  }}
+                projectPath: BalanceITUnityGame
+                unityVersion: 2023.2.20f1
+                buildName: BalanceITUnityGameBuild
+            #Artifactupload
+            - uses: actions/upload-artifact@v4
+              with:
+                name: ${{  matrix.target-platform  }}-build
+                path: build/${{  matrix.target-platform  }}
+        strategy:
+            fail-fast: false 
+            matrix:
+                target-platform: 
+                    - WebGL
