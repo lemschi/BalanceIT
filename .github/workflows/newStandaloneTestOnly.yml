@@ -8,23 +8,6 @@ on:
             - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
-    #Test1
-    Test1:
-        name: Test1
-        runs-on: ubuntu-latest
-        steps:
-            - run: ls
-            - run: ls ${{ github.workspace }}
-            - run: ls BalanceIT
-    #Test2
-    Test2:
-        name: Test2
-        runs-on: ubuntu-latest
-        steps:
-            - name: test
-              run: ls
-            - name: test2 
-              run: ls ${{ github.workspace }}
     # Testrunner Step
     testrunner:
         name: Testrun
@@ -32,11 +15,10 @@ jobs:
         steps:
             #Repo Checkout
             - name: Checkout Repo
-              uses: actions/checkout@v4
+              uses: actions/checkout@v3
               with:
                 repository: ${{ github.repository }}
                 path: BalanceITUnityGame
-
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
