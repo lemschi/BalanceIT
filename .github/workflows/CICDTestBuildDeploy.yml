@@ -87,6 +87,7 @@ jobs:
     buildWebGL:
       name: Build ${{  matrix.target-platform  }}
       runs-on: ubuntu-latest
+      needs: testProject
       steps:
           #Repo Checkout
           - uses: actions/checkout@v4
