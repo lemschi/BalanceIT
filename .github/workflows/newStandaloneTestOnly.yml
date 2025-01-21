@@ -16,12 +16,6 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
-            #Library Cache
-            - uses: actions/cache@v4
-              with:
-                path: BalanceITUnityGame/Library
-                key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
-            - uses: actions/cache@v4
             #StandaloneTest Runnen mit GameCI
             - name: Run StandaloneTest
               id: standalone
@@ -33,7 +27,7 @@ jobs:
               with:
                 projectPath: BalanceITUnityGame
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
-                #testmode: standalone
+                testmode: standalone
                 artifactsPath: standalone-artifacts
             #TestResults uploaden
             - name: Upload Test Result
@@ -50,8 +44,12 @@ jobs:
         if: success()
         steps:
             #Repo Checkout
-            #- name: Checkout Repo
-            #  uses: actions/checkout@v4
+            - uses: actions/checkout@v4
+            #Library Cache
+            - uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-${{  matrix.unity-version  }}-${{  matrix.target-platform  }}
             #Builder Step
             - uses: game-ci/unity-builder@v4
               env:
