@@ -5,7 +5,7 @@ on:
 jobs:
     #Build Step
     buildProject:
-        name: BuildWebGL
+        name: Build ${{  matrix.target-platform  }}
         runs-on: ubuntu-latest
         steps:
             #Repo Checkout
