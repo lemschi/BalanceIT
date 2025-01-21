@@ -1,8 +1,6 @@
 name: CI/CD - DeployOnly - NOTWORKING
 
 on:
-    push:
-        paths:
     workflow_dispatch: {}
 jobs:
     buildProject:

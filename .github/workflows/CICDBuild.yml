@@ -1,8 +1,6 @@
 name: CI/CD - BuildOnly
 
 on:
-    push:
-        paths:
     workflow_dispatch: {}
 jobs:
     #Build Step

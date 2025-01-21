@@ -1,8 +1,6 @@
 name: CI/CD - TestOnly
 
 on:
-    push:
-        paths:
     workflow_dispatch: {}
 jobs:
     # Testrunner Step
