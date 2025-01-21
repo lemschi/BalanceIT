@@ -26,7 +26,7 @@ jobs:
               with:
                 targetPlatform: ${{  matrix.target-platform  }}
                 projectPath: BalanceITUnityGame
-                unityVersion: auto #2023.2.20f1
+                unityVersion: 2023.2.20f1
                 buildName: BalanceITUnityGameBuild
             #Artifactupload
             - uses: actions/upload-artifact@v4
