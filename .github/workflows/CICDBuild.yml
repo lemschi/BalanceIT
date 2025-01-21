@@ -1,4 +1,4 @@
-name: CI/CD - BuildOnly
+name: CI/CD - BuildOnlyTest
 
 on:
     workflow_dispatch: {}

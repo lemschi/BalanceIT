@@ -1,4 +1,4 @@
-name: CI/CD - TestOnly
+name: CI/CD - TestrunnerOnlyTest
 
 on:
     workflow_dispatch: {}

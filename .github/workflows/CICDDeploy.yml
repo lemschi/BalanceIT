@@ -1,4 +1,4 @@
-name: CI/CD - DeployOnly - NOTWORKING
+name: CI/CD - DeployOnlyTest - NOTWORKING
 
 on:
     workflow_dispatch: {}
