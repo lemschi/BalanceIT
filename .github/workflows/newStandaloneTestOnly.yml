@@ -16,8 +16,8 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
-              with:
-                path: BalanceITUnityGame
+              #with:
+                #path: BalanceITUnityGame
             #LS CMD
             - name: Check Files
               run: ls
@@ -30,7 +30,7 @@ jobs:
                 UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                 UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                projectPath: BalanceIT/BalanceITUnityGame
+                #projectPath: BalanceIT/BalanceITUnityGame
                 githubToken: ${{ secrets.CIGITHUB_TOKEN }}
                 testmode: standalone
                 artifactsPath: standalone-artifacts
