@@ -37,9 +37,9 @@ jobs:
                 name: Test results for ${{  matrix.testMode  }}
                 path: ${{ matrix.testMode  }}-artifacts
         strategy:
-          fail-fast: false 
-          matrix:
-            testMode:
+            fail-fast: false 
+            matrix:
+              testMode:
                 - PlayMode
                 - EditMode
                 - Standalone
@@ -117,8 +117,8 @@ jobs:
               name: ${{  matrix.target-platform  }}-build
               path: build/${{  matrix.target-platform  }}
       strategy:
-          fail-fast: false 
-          matrix:
+           fail-fast: false 
+           matrix:
               target-platform: 
                   - WebGL
     #DeployWebGLBuildToPages
