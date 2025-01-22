@@ -1,11 +1,13 @@
-name: CI/CD - Test - Build - Upload
+name: CI/CD - Test - Build - Deploy - MAIN BRANCH
 
 on:
     push:
-        paths:
-            - 'BalanceITUnityGame/Assets/**'
-            - 'BalanceITUnityGame/Packages/**'
-            - 'BalanceITUnityGame/ProjectSettings/**'
+      branches:
+        - 'main'
+      paths:
+        - 'BalanceITUnityGame/Assets/**'
+        - 'BalanceITUnityGame/Packages/**'
+        - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
     # Testrunner Step
@@ -16,6 +18,12 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
+            #Cache
+            - name: Cache Step
+              uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-BalanceITUnityGame-${{  matrix.testMode  }}
             #Tests Runnen mit GameCI
             - name: Run ${{  matrix.testMode }}
               id: testrun
@@ -37,10 +45,12 @@ jobs:
                 name: Test results for ${{  matrix.testMode  }}
                 path: ${{ matrix.testMode  }}-artifacts
         strategy:
+            fail-fast: false 
             matrix:
-                testMode:
-                    - PlayMode
-                    - EditMode
+              testMode:
+                - PlayMode
+                - EditMode
+                - Standalone
     # Build Step Windows & Linux
     buildWindowsAndLinux:
         name: ${{ matrix.target-platform  }}-Build
@@ -65,7 +75,7 @@ jobs:
                 targetPlatform: ${{  matrix.target-platform  }}
                 projectPath: BalanceITUnityGame
                 unityVersion: ${{  matrix.unity-version  }}
-                buildName: BalanceITUnityGameBuild
+                buildName: BalanceITUnityGameBuildWindowsLinux
             #Artifactupload
             - uses: actions/upload-artifact@v4
               with:
@@ -85,7 +95,7 @@ jobs:
                       target-platform: StandaloneWindows64
     #Build Step WebGL
     buildWebGL:
-      name: Build ${{  matrix.target-platform  }}
+      name: ${{  matrix.target-platform  }}-Build
       runs-on: ubuntu-latest
       needs: testProject
       steps:
@@ -108,15 +118,16 @@ jobs:
               targetPlatform: ${{  matrix.target-platform  }}
               projectPath: BalanceITUnityGame
               unityVersion: 2023.2.20f1
-              buildName: BalanceITUnityGameBuild
+              #Name docs needed for GithubPagesDeploy
+              buildName: docs
           #Artifactupload
           - uses: actions/upload-artifact@v4
             with:
               name: ${{  matrix.target-platform  }}-build
               path: build/${{  matrix.target-platform  }}
       strategy:
-          fail-fast: false 
-          matrix:
+           fail-fast: false 
+           matrix:
               target-platform: 
                   - WebGL
     #DeployWebGLBuildToPages
