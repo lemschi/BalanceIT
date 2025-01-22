@@ -1,11 +1,16 @@
-name: CI/CD - Test - Build - Deploy
+name: CI/CD - Test - Build - Deploy - MAIN BRANCH
 
 on:
+    pull_request:
+      branches:
+        - 'features'
     push:
-        paths:
-            - 'BalanceITUnityGame/Assets/**'
-            - 'BalanceITUnityGame/Packages/**'
-            - 'BalanceITUnityGame/ProjectSettings/**'
+      branches:
+        - 'main'
+      paths:
+        - 'BalanceITUnityGame/Assets/**'
+        - 'BalanceITUnityGame/Packages/**'
+        - 'BalanceITUnityGame/ProjectSettings/**'
     workflow_dispatch: {}
 jobs:
     # Testrunner Step
