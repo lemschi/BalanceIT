@@ -116,7 +116,8 @@ jobs:
               targetPlatform: ${{  matrix.target-platform  }}
               projectPath: BalanceITUnityGame
               unityVersion: 2023.2.20f1
-              buildName: BalanceITUnityGameBuildWebGL
+              #Name docs needed for GithubPagesDeploy
+              buildName: docs
           #Artifactupload
           - uses: actions/upload-artifact@v4
             with:
