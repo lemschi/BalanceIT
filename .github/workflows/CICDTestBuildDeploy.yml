@@ -16,6 +16,12 @@ jobs:
             #Repo Checkout
             - name: Checkout Repo
               uses: actions/checkout@v4
+            #Cache
+            - name: Cache Step
+              uses: actions/cache@v4
+              with:
+                path: BalanceITUnityGame/Library
+                key: Library-BalanceITUnityGame-${{  matrix.testMode  }}
             #Tests Runnen mit GameCI
             - name: Run ${{  matrix.testMode }}
               id: testrun
