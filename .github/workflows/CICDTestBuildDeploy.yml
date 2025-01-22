@@ -37,11 +37,12 @@ jobs:
                 name: Test results for ${{  matrix.testMode  }}
                 path: ${{ matrix.testMode  }}-artifacts
         strategy:
-            matrix:
-                testMode:
-                    - PlayMode
-                    - EditMode
-                    - Standalone
+          fail-fast: false 
+          matrix:
+            testMode:
+                - PlayMode
+                - EditMode
+                - Standalone
     # Build Step Windows & Linux
     buildWindowsAndLinux:
         name: ${{ matrix.target-platform  }}-Build
