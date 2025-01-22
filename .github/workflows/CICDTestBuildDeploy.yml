@@ -1,9 +1,6 @@
 name: CI/CD - Test - Build - Deploy - MAIN BRANCH
 
 on:
-    pull_request:
-      branches:
-        - 'features'
     push:
       branches:
         - 'main'
