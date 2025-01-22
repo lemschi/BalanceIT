@@ -1,7 +1,10 @@
 name: CI/CD - Test - Build - Deploy
 
 on:
+    pull_request: features
     push:
+      branches:
+        - 'main'
         paths:
             - 'BalanceITUnityGame/Assets/**'
             - 'BalanceITUnityGame/Packages/**'
