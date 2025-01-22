@@ -3,7 +3,7 @@ name: CI/CD - Test - Build - Deploy - MAIN BRANCH
 on:
     push:
       branches:
-        - 'main'
+        - main
       paths:
         - 'BalanceITUnityGame/Assets/**'
         - 'BalanceITUnityGame/Packages/**'
