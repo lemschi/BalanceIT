@@ -1,6 +1,10 @@
-name: CI/CD - Test - BRANCH FEATURES
+name: CI/CD - Test - FEATURES BRANCH
 
 on:
+    pull_request:
+      branches: 'features'
+    merge_group:
+      types: [checks_requested]
     push:
       branches:
         - 'features'
