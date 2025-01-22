@@ -1,4 +1,4 @@
-name: CI/CD - Test - Build - Deploy
+name: CI/CD - Test - Build - Deploy - MAIN BRANCH
 
 on:
     pull_request:
