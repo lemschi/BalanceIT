@@ -19,10 +19,6 @@
 
 ## Badges & Technologies
 * [![CI/CD - Test - Build - Upload](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml)
-
-* [![CI/CD - TestrunnerOnlyTest](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTest.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTest.yml)
-* [![CI/CD - BuildOnlyTest](https://github.com/lemschi/BalanceIT/actions/workflows/CICDBuild.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDBuild.yml)
-* [![CI/CD - DeployOnlyTest](https://github.com/lemschi/BalanceIT/actions/workflows/CICDDeploy.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDDeploy.yml)
 * [![Qodana](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml)
 
 <h3 align="left">Languages and Tools:</h3>
