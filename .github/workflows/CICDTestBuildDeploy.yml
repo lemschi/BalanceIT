@@ -1,4 +1,4 @@
-name: CI/CD - Test - Build - Upload
+name: CI/CD - Test - Build - Deploy
 
 on:
     push:
@@ -41,6 +41,7 @@ jobs:
                 testMode:
                     - PlayMode
                     - EditMode
+                    - Standalone
     # Build Step Windows & Linux
     buildWindowsAndLinux:
         name: ${{ matrix.target-platform  }}-Build
