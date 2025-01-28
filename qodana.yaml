@@ -4,3 +4,15 @@ profile:
   name: qodana.recommended
 include:
   - name: CheckDependencyLicenses
+  - name: UnityErrors
+  - name: Unity.NoNullCoalescing
+  - name: Unity.NoNullPropagation
+  - name: Unity.NoNullPatternMatching
+  - name: Unity.InefficientPropertyAccess
+  - name: RedundantEnumCaseLabelForDefaultSection
+  - name: AsyncVoidMethod
+  - name: NullableWarningSuppressionIsUsed
+  - name: CSharpErrors
+  - name: LocalFunctionCanBeMadeStatic
+  - name: RemoveConstructorInvocation
+  - name: StructMemberCanBeMadeReadOnly
