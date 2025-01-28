@@ -8,6 +8,7 @@
 *The Balanceboard itself is available here: (Insert Link)
 
 ## How to install & run
+There is currently no release that is available to download.
 
 ## Credits
 
