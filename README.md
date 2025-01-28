@@ -1,6 +1,5 @@
 # BalanceIT
-* This repository contains the software-files. The C++-board-code is available here:
-** https://github.com/lemschi/BalanceITBoardCode
+* This repository contains the software-files. The C++-board-code is available here: https://github.com/lemschi/BalanceITBoardCode
 
 ## Getting balance into your life
 
