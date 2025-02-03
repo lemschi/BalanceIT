@@ -12,10 +12,10 @@ There is currently no release that is available to download.
 
 ## Credits
 
-* Balanceboard-Developement: Christoph Fink
-* Gamedeveloper: Simon Gößler
+* Balanceboard-Developement & Arduino-MPU-Script: Christoph Fink
+* Gamedevelopement: Simon Gößler
 * Gamedesign: Felix Hochsteger
-* Devops & Website: Jonathan Lemmerer
+* Devops & CI/CD: Jonathan Lemmerer
 
 ## License
 
