@@ -1,5 +1,5 @@
 # BalanceIT
-* This repository contains the software-files. The C++-board-code is available here: https://github.com/lemschi/BalanceITBoardCode
+* This repository contains the software-files of our Unity-Project called BalanceIT. This repository also contains the C++ Script for the Arduino-MPU.
 
 ## Getting balance into your life
 
