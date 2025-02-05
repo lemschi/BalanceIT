@@ -1,1 +1,19 @@
+name: Test MPU-Script
 
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - 'main'
+      - 'features'
+    paths:
+      - 'MpuScript'
+jobs:
+  # Test MPU-Script C++
+  TestScript:
+    name: Testrun C++
+    runs-on: ubuntu-latest
+    steps:
+      #Repo-Checkout
+      - name: Checkout Repository
+        uses: actions/checkout@v4
