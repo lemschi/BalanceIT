@@ -52,7 +52,7 @@ jobs:
               if: always()
               with:
                 name: Coverage results for ${{ matrix.testMode }}
-                path: ${{ BalanceITUnityGame/Tests }}
+                path: BalanceITUnityGame/Tests
         strategy:
             fail-fast: false 
             matrix:
