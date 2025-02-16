@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "generatedon": "2025-02-16T17:04:05Z",
+    "parser": "MultiReportParser (3x OpenCoverParser)",
+    "assemblies": 3,
+    "classes": 10,
+    "files": 10,
+    "coveredlines": 5,
+    "uncoveredlines": 507,
+    "coverablelines": 512,
+    "totallines": 977,
+    "linecoverage": 0.9,
+    "coveredbranches": 0,
+    "totalbranches": 0,
+    "coveredmethods": 2,
+    "totalmethods": 45,
+    "methodcoverage": 4.4
+ },
+  "coverage": {
+    "assemblies": [
+      { "name": "Assembly-CSharp", "classes": 8, "coverage": 0, "coveredlines": 0, "coverablelines": 367, "totallines": 710, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 29, "classesinassembly": [
+        { "name": "AnimationPlaceholder", "coverage": 0, "coveredlines": 0, "coverablelines": 12, "totallines": 30, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
+        { "name": "BallScript", "coverage": 0, "coveredlines": 0, "coverablelines": 34, "totallines": 62, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 4 },
+        { "name": "CameraScript", "coverage": 0, "coveredlines": 0, "coverablelines": 6, "totallines": 19, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
+        { "name": "Kamera", "coverage": 0, "coveredlines": 0, "coverablelines": 6, "totallines": 19, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
+        { "name": "MPUScript", "coverage": 0, "coveredlines": 0, "coverablelines": 117, "totallines": 202, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 6 },
+        { "name": "MPUScriptNew", "coverage": 0, "coveredlines": 0, "coverablelines": 16, "totallines": 41, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 4 },
+        { "name": "PlatformScript", "coverage": 0, "coveredlines": 0, "coverablelines": 10, "totallines": 53, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 3 },
+        { "name": "PlayerSript", "coverage": 0, "coveredlines": 0, "coverablelines": 166, "totallines": 284, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 6 } ] },
+      { "name": "Assembly-CSharp-Editor", "classes": 1, "coverage": 0, "coveredlines": 0, "coverablelines": 140, "totallines": 242, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 14, "classesinassembly": [
+        { "name": "ReadmeEditor", "coverage": 0, "coveredlines": 0, "coverablelines": 140, "totallines": 242, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 14 } ] },
+      { "name": "Tests", "classes": 1, "coverage": 100, "coveredlines": 5, "coverablelines": 5, "totallines": 25, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2, "classesinassembly": [
+        { "name": "idfk", "coverage": 100, "coveredlines": 5, "coverablelines": 5, "totallines": 25, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 } ] } ]
+  }
+}

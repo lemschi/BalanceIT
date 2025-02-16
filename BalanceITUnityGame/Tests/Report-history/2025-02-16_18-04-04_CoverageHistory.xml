@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2025-02-16_18-04-04" tag="">
+  <assembly name="Assembly-CSharp">
+    <class name="AnimationPlaceholder" coveredlines="0" coverablelines="12" totallines="30" coveredbranches="0" totalbranches="0" />
+    <class name="BallScript" coveredlines="0" coverablelines="34" totallines="62" coveredbranches="0" totalbranches="0" />
+    <class name="CameraScript" coveredlines="0" coverablelines="6" totallines="19" coveredbranches="0" totalbranches="0" />
+    <class name="Kamera" coveredlines="0" coverablelines="6" totallines="19" coveredbranches="0" totalbranches="0" />
+    <class name="MPUScript" coveredlines="0" coverablelines="117" totallines="202" coveredbranches="0" totalbranches="0" />
+    <class name="MPUScriptNew" coveredlines="0" coverablelines="16" totallines="41" coveredbranches="0" totalbranches="0" />
+    <class name="PlatformScript" coveredlines="0" coverablelines="10" totallines="53" coveredbranches="0" totalbranches="0" />
+    <class name="PlayerSript" coveredlines="0" coverablelines="166" totallines="284" coveredbranches="0" totalbranches="0" />
+  </assembly>
+  <assembly name="Assembly-CSharp-Editor">
+    <class name="ReadmeEditor" coveredlines="0" coverablelines="140" totallines="242" coveredbranches="0" totalbranches="0" />
+  </assembly>
+  <assembly name="Tests">
+    <class name="idfk" coveredlines="5" coverablelines="5" totallines="25" coveredbranches="0" totalbranches="0" />
+  </assembly>
+</coverage>
