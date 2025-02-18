@@ -38,7 +38,7 @@ jobs:
                 testMode: ${{ matrix.testMode  }}
                 artifactsPath: ${{  matrix.testMode  }}-artifacts
                 #Coverageoptions
-                coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
+                coverageOptions: "enable;resultsPath=CodeCoverage;generateAdditionalMetrics;assemblyFilters=+MyGameAssembly"
             #TestResults uploaden
             - name: Upload Test Result
               uses: actions/upload-artifact@v4
@@ -47,12 +47,12 @@ jobs:
                 name: Test results for ${{  matrix.testMode  }}
                 path: ${{ matrix.testMode  }}-artifacts
             #Coveragereportupload
-            - name: Coveragereportupload
+            - name: Upload Code Coverage Report
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: Coverage results for ${{ matrix.testMode }}
-                path: ${{ matrix.testMode  }}-coverageartifacts
+                name: code-coverage-${{ matrix.testMode }}
+                path: CodeCoverage
         strategy:
             fail-fast: false 
             matrix:
