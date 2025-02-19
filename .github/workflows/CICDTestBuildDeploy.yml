@@ -38,7 +38,7 @@ jobs:
                 testMode: ${{ matrix.testMode  }}
                 artifactsPath: ${{  matrix.testMode  }}-artifacts
                 #Coverageoptions
-                coverageOptions: "enable;resultsPath=CodeCoverage;generateAdditionalMetrics;assemblyFilters=+MyGameAssembly"
+                coverageOptions: "enable;resultsPath=CodeCoverage;generateHtmlReport;generateAdditionalMetrics;assemblyFilters=+MyGameAssembly"
                 extraArguments: "-codeCoverageReportPath=CodeCoverage/coverage-report.html"
             #TestResults uploaden
             - name: Upload Test Result
