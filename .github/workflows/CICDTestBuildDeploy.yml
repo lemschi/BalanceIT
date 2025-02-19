@@ -39,6 +39,7 @@ jobs:
                 artifactsPath: ${{  matrix.testMode  }}-artifacts
                 #Coverageoptions
                 coverageOptions: "enable;resultsPath=CodeCoverage;generateAdditionalMetrics;assemblyFilters=+MyGameAssembly"
+                extraArguments: "-codeCoverageReportPath=CodeCoverage/coverage-report.html"
             #TestResults uploaden
             - name: Upload Test Result
               uses: actions/upload-artifact@v4
