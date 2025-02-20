@@ -1,44 +1,57 @@
-#include <gtest/gtest.h>
+#include <Arduino.h>
+#include <unity.h>
 #include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
 #include <Wire.h>
 
-// Mock-Funktionen für Serial
-class SerialMock {
-public:
-    void begin(int baud) {}
-    void println(const char* msg) { last_msg = std::string(msg); }
-    void print(float value) {}
-    std::string last_msg;
-} Serial;
-
-// Mock-Funktionen für GPIO
-int fake_digitalRead(int pin) {
-    if (pin == 34) return 1;  // Simuliere Knopfdruck
-    if (pin == 27) return 0;
-    return 0;
-}
-
+// MPU6050-Sensor-Objekt
 Adafruit_MPU6050 mpu;
 
-// Setup-Test: Prüft, ob der MPU6050 korrekt initialisiert wird
-TEST(MPU6050Test, Initialization) {
-    ASSERT_TRUE(mpu.begin()) << "MPU6050 nicht gefunden!";
+// Test: MPU6050 sollte initialisiert werden können
+void test_mpu6050_init(void) {
+    bool status = mpu.begin();
+    TEST_ASSERT_TRUE_MESSAGE(status, "MPU6050 initialization failed!");
 }
 
-// Knopftest: Prüft, ob die richtigen Werte ausgegeben werden
-TEST(ButtonTest, ButtonPress) {
-    EXPECT_EQ(fake_digitalRead(34), 1);
-    EXPECT_EQ(fake_digitalRead(27), 0);
+// Test: Simulierte digitale Eingänge für Knopfmodule
+void test_button_module(void) {
+    pinMode(34, INPUT);
+    pinMode(27, INPUT);
+
+    // Simulierte Eingabe (HIGH für Modul1, LOW für Modul2)
+    digitalWrite(34, HIGH);
+    digitalWrite(27, LOW);
+
+    TEST_ASSERT_EQUAL(HIGH, digitalRead(34));
+    TEST_ASSERT_EQUAL(LOW, digitalRead(27));
+
+    // Simulierte Eingabe (LOW für beide)
+    digitalWrite(34, LOW);
+    digitalWrite(27, LOW);
+
+    TEST_ASSERT_EQUAL(LOW, digitalRead(34));
+    TEST_ASSERT_EQUAL(LOW, digitalRead(27));
 }
 
-// Serial-Ausgabe-Test
-TEST(SerialOutputTest, SerialPrintCheck) {
-    Serial.println("ESP_ON");
-    EXPECT_EQ(Serial.last_msg, "ESP_ON");
+// Test: Simulierte Sensordaten vom MPU6050
+void test_mpu6050_sensor_data(void) {
+    sensors_event_t a, g, temp;
+    mpu.getEvent(&a, &g, &temp);
+
+    // Annahme: Die Werte sollten sich innerhalb eines sinnvollen Bereichs befinden
+    TEST_ASSERT_FLOAT_WITHIN(10.0, 0.0, a.acceleration.x);
+    TEST_ASSERT_FLOAT_WITHIN(10.0, 0.0, a.acceleration.y);
+    TEST_ASSERT_FLOAT_WITHIN(10.0, 0.0, a.acceleration.z);
 }
 
-// Main für Google Test
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+void setup() {
+    UNITY_BEGIN(); // Starte Unity-Test-Framework
+    RUN_TEST(test_mpu6050_init);
+    RUN_TEST(test_button_module);
+    RUN_TEST(test_mpu6050_sensor_data);
+    UNITY_END(); // Beende Testausführung
+}
+
+void loop() {
+    // Wird nicht benötigt für Unit-Tests
 }
