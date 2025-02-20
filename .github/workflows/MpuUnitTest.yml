@@ -7,42 +7,42 @@ on:
       - 'main'
       - 'features'
     paths:
-      - 'MpuScript/Scripts'
+      - 'MpuScript/Scripts/**'
+  pull_request:
+    branches:
+      - 'main'
+      - 'features'
+    paths:
+      - 'MpuScript/Scripts/**'
+
 jobs:
   # Test MPU-Script C++
   testScript:
     name: Test-C++-Script
     runs-on: ubuntu-latest
     steps:
-      #Repo-Checkout
-      - name: Clone Repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      #Arduino CLI installieren
-      - name: Arduino CLI installieren
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          echo "$HOME/bin" >> $GITHUB_PATH  # Pfad dauerhaft hinzufügen
-          export PATH="$HOME/bin:$PATH"    # Pfad für diesen Job setzen
-          arduino-cli version              # Überprüfung, ob CLI funktioniert
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
 
-      #Abhängigkeiten installieren
-      - name: Dependencies installieren
-        run: |
-          arduino-cli core update-index
-          arduino-cli core install esp32:esp32
-          arduino-cli lib install "Adafruit MPU6050"
-          sudo apt-get install -y cmake googletest
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y gcc-arm-none-eabi
 
-      #Compiler-Step
-      - name: Kompilieren des ESP32 Codes
-        run: |
-          arduino-cli compile --fqbn esp32:esp32 BalanceboardCodeESP32.ino
+    - name: Set up PlatformIO
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+    
+    - name: Install PlatformIO
+      run: pip install platformio
 
-      #Test- und Build-Step
-      - name: Build und Test
-        run: |
-          mkdir build && cd build
-          cmake ..
-          make
-          ctest --output-on-failure
+    - name: Run Unit Tests
+      run: |
+        cd MpuScript/Tests
+        platformio test -e native -v
