@@ -1,4 +1,4 @@
-name: Test MPU-Script
+name: MPU-Script Test
 
 on:
   workflow_dispatch: {}
@@ -7,13 +7,34 @@ on:
       - 'main'
       - 'features'
     paths:
-      - 'MpuScript'
+      - 'MpuScript/Scripts'
 jobs:
   # Test MPU-Script C++
-  TestScript:
-    name: Testrun C++
+  testScript:
+    name: Test-C++-Script
     runs-on: ubuntu-latest
     steps:
       #Repo-Checkout
-      - name: Checkout Repository
+      - name: Clone Repository
         uses: actions/checkout@v4
+
+      #Arduino CLI installieren
+      - name: Arduino CLI installieren
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      #Abhängigkeiten installieren
+      - name: Dependencies installieren
+        run: |
+          arduino-cli lib install "Adafruit MPU6050"
+          sudo apt-get install -y cmake googletest
+
+      #Test- und Build-Step
+      - name: Build und Test
+        run: |
+          mkdir build && cd build
+          cmake ..
+          make
+          ctest --output-on-failure
