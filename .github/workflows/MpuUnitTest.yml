@@ -22,12 +22,15 @@ jobs:
       - name: Arduino CLI installieren
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          arduino-cli core update-index
-          arduino-cli core install esp32:esp32
+          echo "$HOME/bin" >> $GITHUB_PATH  # Pfad dauerhaft hinzufügen
+          export PATH="$HOME/bin:$PATH"    # Pfad für diesen Job setzen
+          arduino-cli version              # Überprüfung, ob CLI funktioniert
 
       #Abhängigkeiten installieren
       - name: Dependencies installieren
         run: |
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
           arduino-cli lib install "Adafruit MPU6050"
           sudo apt-get install -y cmake googletest
 
