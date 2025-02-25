@@ -1,4 +1,4 @@
-name: MPU-Script Test
+name: MPU-Script Test deprecated
 
 on:
   workflow_dispatch: {}
