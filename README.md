@@ -20,7 +20,6 @@ There is currently no release that is available to download.
 ## License
 
 ## Badges & Technologies
-* [![MPU-Script Test](https://github.com/lemschi/BalanceIT/actions/workflows/MpuUnitTest.yml/badge.svg?branch=main)](https://github.com/lemschi/BalanceIT/actions/workflows/MpuUnitTest.yml)
 * [![CI/CD - Test - Build - Deploy](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/CICDTestBuildDeploy.yml)
 * [![pages-build-deployment](https://github.com/lemschi/BalanceIT/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/pages/pages-build-deployment)
 * [![Qodana](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/lemschi/BalanceIT/actions/workflows/qodana_code_quality.yml)
