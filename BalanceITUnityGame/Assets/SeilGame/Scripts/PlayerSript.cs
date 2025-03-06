@@ -20,7 +20,7 @@ public class PlayerSript : MonoBehaviour
     private Rigidbody rBody;
     private Collider aCollider;
 
-    [SerializeField]private float angle;
+    [SerializeField]public static float angle;
 
     private bool isMoving;
     private bool levelStarted;
@@ -32,6 +32,8 @@ public class PlayerSript : MonoBehaviour
     private float windSpeed;
     private int l = 0;
     private int criticalState;
+    private int p = 100;
+
 
     //Mpu integration
     [SerializeField] private float mpuAccelerator = 2.5f;
@@ -48,7 +50,8 @@ public class PlayerSript : MonoBehaviour
         animator = GetComponent<Animator>();
         aCollider = GetComponent<Collider>();
 
-        ropeConPoint.transform.position = startPlatform.transform.position;
+        ropeConPoint.transform.position = new Vector3(startPlatform.transform.position.x, 0.5f, startPlatform.transform.position.z);
+
     }
 
     // Update is called once per frame
@@ -58,37 +61,51 @@ public class PlayerSript : MonoBehaviour
         //angle keyboard
         if (!MPUScript.streamIsOpen)
         {
-            if (transform.position.y >= 0.5)
+            if (p==100)
             {
-                if (Input.GetKey(KeyCode.D))
+                Debug.Log("keyboard input");
+                p = 0;
+            }
+            if (p == 10)
+            {
+                Debug.Log(realAngle);
+                Debug.Log(angle);
+            }
+            p++;
+            if (Input.GetKey(KeyCode.D))
+            {
+                Debug.Log("druckst D");
+                realAngle -= 2f;
+                angle -= 2f;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                realAngle += 2f;
+                angle += 2f;
+            Debug.Log("druckst A");
+            }
+            else
+            {
+                if (ropeConPoint.transform.rotation.z > 0)
                 {
-                    realAngle -= 0.2f;
-                }
-                else if (Input.GetKey(KeyCode.A))
-                {
-                    realAngle += 0.2f;
+                    realAngle = 0.01f;
                 }
                 else
                 {
-                    if (ropeConPoint.transform.rotation.z > 0)
-                    {
-                        realAngle = 0.01f;
-                    }
-                    else
-                    {
-                        realAngle = -0.01f;
-                    }
+                    realAngle = -0.01f;
                 }
             }
-            else
-                realAngle = 0; //so u dont do looptiloops
-
-            Debug.Log("Keyboard input");
         }
 
         //angle change board
         if (MPUScript.streamIsOpen)
         {
+            if (p == 100)
+            {
+                Debug.Log("balanceboard input");
+                p = 0;
+            }
+            p++;
             /* old shit
             realAngle += (float)Math.Round((MPUScript.mpuDaten[1] / mpuDeaccelerator), 1);
             realAngle = (float)Math.Round(realAngle, 2);
