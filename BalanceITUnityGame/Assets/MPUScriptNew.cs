@@ -22,6 +22,7 @@ public class MPUScriptNew : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+
     {
         mpuDatenString = mpudata_stream.ReadLine().Split(',');
 

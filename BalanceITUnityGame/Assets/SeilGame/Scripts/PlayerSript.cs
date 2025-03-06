@@ -56,38 +56,38 @@ public class PlayerSript : MonoBehaviour
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
         //angle keyboard
-        if (!MPUScriptNew.streamIsOpen)
+        if (!MPUScript.streamIsOpen)
         {
             if (transform.position.y >= 0.5)
             {
                 if (Input.GetKey(KeyCode.D))
                 {
-                    angle -= 0.2f;
+                    realAngle -= 0.2f;
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
-                    angle += 0.2f;
+                    realAngle += 0.2f;
                 }
                 else
                 {
                     if (ropeConPoint.transform.rotation.z > 0)
                     {
-                        angle = 0.01f;
+                        realAngle = 0.01f;
                     }
                     else
                     {
-                        angle = -0.01f;
+                        realAngle = -0.01f;
                     }
                 }
             }
             else
-                angle = 0; //so u dont do looptiloops
+                realAngle = 0; //so u dont do looptiloops
 
             Debug.Log("Keyboard input");
         }
 
         //angle change board
-        if (MPUScriptNew.streamIsOpen)
+        if (MPUScript.streamIsOpen)
         {
             /* old shit
             realAngle += (float)Math.Round((MPUScript.mpuDaten[1] / mpuDeaccelerator), 1);
@@ -98,7 +98,7 @@ public class PlayerSript : MonoBehaviour
             }
             */
             //get value from onderen script
-            realAngle = MPUScriptNew.mpuDaten[0];
+            realAngle = MPUScript.mpuDaten[0];
             //remove standard abweichung
             realAngle -= 0.4f;
             //make value into angle ned frogn warum 18.36f is hoid afoch so
