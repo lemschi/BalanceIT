@@ -21,6 +21,7 @@ public class UI : MonoBehaviour
     void BalanceBoardStance()
     {
         //balanceBoardImg.transform.rotation = Quaternion.Euler(0, 0, MPUScript.mpuDaten[0]);
-        balanceBoardImg.transform.rotation = Quaternion.Euler(0, 0, balanceBoardImg.transform.rotation.z + PlayerSript.angle);
+        balanceBoardImg.transform.rotation = Quaternion.Euler(0, 0, PlayerSript.angle);
+        //balanceBoardImg.transform.rotation.z + PlayerSript.angle
     }
 }

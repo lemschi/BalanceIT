@@ -37,7 +37,7 @@ public class PlayerSript : MonoBehaviour
 
     //Mpu integration
     [SerializeField] private float mpuAccelerator = 2.5f;
-    [SerializeField] private float realAngle;
+    [SerializeField] public static float realAngle;
 
     // Start is called before the first frame update
     void Start()

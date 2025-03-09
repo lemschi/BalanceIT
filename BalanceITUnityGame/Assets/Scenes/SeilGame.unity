@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 391814221}
   - component: {fileID: 391814220}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BalanceBoardStance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,8 +383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 324.073, y: 195.32306}
-  m_SizeDelta: {x: 111.8538, y: 29.3539}
+  m_AnchoredPosition: {x: 1050, y: 600}
+  m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &391814220
 MonoBehaviour:
@@ -838,7 +838,6 @@ MonoBehaviour:
   secondsToDie: 5
   windMultiplier: 0
   mpuAccelerator: 2.5
-  realAngle: 0
 --- !u!136 &937334394
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1198,6 +1197,7 @@ GameObject:
   - component: {fileID: 1103517843}
   - component: {fileID: 1103517842}
   - component: {fileID: 1103517841}
+  - component: {fileID: 1103517845}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1288,6 +1288,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1103517845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103517840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3de093f9b2768a47b9d5ea87db622c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1172976251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2319,7 +2331,6 @@ MonoBehaviour:
   secondsToDie: 5
   windMultiplier: 0
   mpuAccelerator: 2.5
-  realAngle: 0
 --- !u!54 &1981251660
 Rigidbody:
   m_ObjectHideFlags: 0
