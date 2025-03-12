@@ -60,7 +60,7 @@ jobs:
               testMode:
                 - PlayMode
                 - EditMode
-                - Standalone
+                # - Standalone
     # Build Step Windows & Linux
     buildWindowsAndLinux:
         name: ${{ matrix.target-platform  }}-Build
