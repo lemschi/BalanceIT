@@ -1,5 +1,5 @@
 # BalanceIT
-* This repository contains the software-files of our Unity-Project called BalanceIT. This repository also contains the C++ Script for the Arduino-MPU.
+* This repository contains the software-files of our Unity-Project called BalanceIT. This repository also contains the C++ Script for the Arduino-MPU under the folder "MPU-Script".
 
 ## Getting balance into your life
 
