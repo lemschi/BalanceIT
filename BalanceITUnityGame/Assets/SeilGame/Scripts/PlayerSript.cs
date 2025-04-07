@@ -59,7 +59,7 @@ public class PlayerSript : MonoBehaviour
     {
         //--------------------------------------------------------------BaseControls--------------------------------------------------------------
         //angle keyboard
-        if (!MPUScript.streamIsOpen)
+        if (!MPUScriptNew.streamIsOpen)
         {
             if (p==100)
             {
@@ -98,7 +98,7 @@ public class PlayerSript : MonoBehaviour
         }
 
         //angle change board
-        if (MPUScript.streamIsOpen)
+        if (MPUScriptNew.streamIsOpen)
         {
             if (p == 100)
             {
@@ -115,7 +115,8 @@ public class PlayerSript : MonoBehaviour
             }
             */
             //get value from onderen script
-            realAngle = MPUScript.mpuDaten[0];
+            ///bis do her schofts____________________________________________________________________________________________________________________
+            realAngle = MPUScriptNew.mpuDaten[0];
             //remove standard abweichung
             realAngle -= 0.4f;
             //make value into angle ned frogn warum 18.36f is hoid afoch so

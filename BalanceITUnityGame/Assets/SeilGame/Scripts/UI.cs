@@ -8,7 +8,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string etwas = MPUScript.mpuDaten[1].ToString();
+        string etwas = MPUScriptNew.mpuDaten[1].ToString();
         balanceBoardImg = GameObject.Find("BalanceBoardStance");
     }
 

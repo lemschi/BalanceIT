@@ -132,9 +132,11 @@ public class MPUScript : MonoBehaviour
             foundStart = true;
 
         //UnityEngine.Debug.Log("temp;" + mpuDatenTemp);
+        UnityEngine.Debug.Log("MPU 1");
 
         if (foundStart)
         {
+            UnityEngine.Debug.Log("MPU 2");
             switch (counter)
             {
                 case 1:
