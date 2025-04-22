@@ -654,7 +654,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.08
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1281,6 +1281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64324bc9fd7098642b2b4299ba0189fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mpuDecelerator: 10
+  maxLean: 11
 --- !u!1001 &906850162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1889,17 +1891,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 826f743bdb9576946ab365bb799a2b4a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.017235065
+      value: 0.0172
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 826f743bdb9576946ab365bb799a2b4a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0044010733
+      value: -0.0044
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 826f743bdb9576946ab365bb799a2b4a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.019583428
+      value: 0.0166
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 826f743bdb9576946ab365bb799a2b4a,
         type: 3}
