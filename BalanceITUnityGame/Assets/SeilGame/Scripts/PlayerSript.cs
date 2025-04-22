@@ -42,6 +42,9 @@ public class PlayerSript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        QualitySettings.vSyncCount= 0;
+        Application.targetFrameRate = 60;
+
         //i kenn neamd der so guaden code schreibt, fui suppa gmocht he <3
         ropeConPoint = GameObject.Find("RopeConPoint");
         startPlatform = GameObject.Find("StartPlatform");
@@ -98,7 +101,7 @@ public class PlayerSript : MonoBehaviour
         }
 
         //angle change board
-        if (MPUScriptNew.streamIsOpen)
+        if (MPUScriptNew.streamIsOpen && isMoving)
         {
             if (p == 100)
             {
@@ -106,24 +109,14 @@ public class PlayerSript : MonoBehaviour
                 p = 0;
             }
             p++;
-            /* old shit
-            realAngle += (float)Math.Round((MPUScript.mpuDaten[1] / mpuDeaccelerator), 1);
-            realAngle = (float)Math.Round(realAngle, 2);
-            if (transform.position.y >= 0.5)
-            {
-                angle = realAngle;
-            }
-            */
-            //get value from onderen script
-            ///bis do her schofts____________________________________________________________________________________________________________________
             realAngle = MPUScriptNew.mpuDaten[0];
-            //remove standard abweichung
             realAngle -= 0.4f;
-            //make value into angle ned frogn warum 18.36f is hoid afoch so
-            //realAngle *= 18.36f;
-            //amplifie values
             realAngle *= mpuAccelerator;
             angle = realAngle;
+        }
+        else if(MPUScriptNew.streamIsOpen && !isMoving)
+        {
+            angle = 0;
         }
 
         //
@@ -220,15 +213,17 @@ public class PlayerSript : MonoBehaviour
             reachedEnd = true;
             isMoving = false;
             rBody.freezeRotation = false;
+            ropeConPoint.transform.rotation = new Quaternion(0,0,0,0);
+            transform.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), new Quaternion(0, 0, 0, 0));
         }
 
-        //movement
+        //start movement
         if (Input.GetKeyDown(KeyCode.Q))
         {
             levelStarted = true;
             isMoving = true;
         }
-
+        //movement forward
         if (!reachedEnd && isMoving)
             ropeConPoint.transform.position = Vector3.MoveTowards(ropeConPoint.transform.position, new Vector3(ropeConPoint.transform.position.x, ropeConPoint.transform.position.y, endPlatform.transform.position.z), moveSpeed);
 
@@ -251,7 +246,7 @@ public class PlayerSript : MonoBehaviour
     {
         Debug.Log("get restetted bitch");
         reachedEnd= false;
-        ropeConPoint.transform.SetLocalPositionAndRotation(startPlatform.transform.position, new Quaternion(0, 0, 0, 0));
+        ropeConPoint.transform.SetLocalPositionAndRotation(new Vector3(startPlatform.transform.position.x, 0.5f, startPlatform.transform.position.z), new Quaternion(0, 0, 0, 0));
         transform.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), new Quaternion(0, 0, 0, 0));
         rBody.freezeRotation = true;
         criticalState= 0;

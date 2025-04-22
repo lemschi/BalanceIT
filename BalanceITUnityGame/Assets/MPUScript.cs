@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MPUScript : MonoBehaviour
 {
-    SerialPort mpudata_stream = new SerialPort("COM5", 115200);
+    SerialPort mpudata_stream = new SerialPort("COM11", 115200);
 
     [SerializeField] public float deadZone;
     //[SerializeField] public float standardDriftX = 3;
@@ -36,6 +36,7 @@ public class MPUScript : MonoBehaviour
 
     void Start()
     {
+        mpudata_stream.ReadTimeout = 100;
         mpudata_stream.Open(); //Serial data stream wird hergestellt
         streamIsOpen = mpudata_stream.IsOpen;
         streamIsOpenUnityIsDeppat = streamIsOpen;
@@ -73,6 +74,14 @@ public class MPUScript : MonoBehaviour
             if (mpuDatenRAW != mpuDatenTemp)
                 TranslateMpuStream(mpuDatenRAW);
 
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        if (streamIsOpen)
+        {
+            mpudata_stream.Close();
         }
     }
 
@@ -124,7 +133,6 @@ public class MPUScript : MonoBehaviour
 
     }
 
-
     private void TranslateMpuStream(string newData)
     {
         mpuDatenTemp = newData;
@@ -164,7 +172,6 @@ public class MPUScript : MonoBehaviour
                         mpuDaten[1] = mpuDatenTempFloat;
                         mpuDatenDebug[1] = mpuDatenTemp;
                     }
-                    //UnityEngine.Debug.Log(mpuDaten[1]);
                     break;
                 case 3:
                     mpuDatenTempFloat = float.Parse(mpuDatenTemp) / 100 - calibrationValues[2];
