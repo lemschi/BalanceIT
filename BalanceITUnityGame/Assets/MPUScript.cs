@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MPUScript : MonoBehaviour
 {
-    SerialPort mpudata_stream = new SerialPort("COM6", 115200);
+    SerialPort mpudata_stream = new SerialPort("COM5", 115200);
 
     [SerializeField] public float deadZone;
     //[SerializeField] public float standardDriftX = 3;
