@@ -24,7 +24,6 @@ public class PlayerSript : MonoBehaviour
 
     private bool isMoving;
     private bool levelStarted;
-    private bool isExtremeWind;
     private bool reachedEnd = false;
     private bool windActive;
     private bool isDead;
@@ -266,7 +265,7 @@ public class PlayerSript : MonoBehaviour
 
             if (windSpeed == 1 || windSpeed == -1)
             {
-                isExtremeWind = true;
+                //isExtremeWind = true;
             }
 
         }
