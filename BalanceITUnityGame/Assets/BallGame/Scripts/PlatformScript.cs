@@ -9,6 +9,7 @@ public class PlatformScript : MonoBehaviour
     [SerializeField] internal float maxLean = 11;
     float mpuX;
     float mpuZ;
+    bool started = false;
 
     internal GameObject plane;
 
@@ -23,15 +24,19 @@ public class PlatformScript : MonoBehaviour
         mpuZ = MPUScriptNew.mpuDaten[1];
 
 
-        if (plane != null)
+        if (plane != null && started)
         {
             MainMovement();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            started = true;
 
         //reset
         if (Input.GetKeyDown(KeyCode.X))
         {
             transform.SetLocalPositionAndRotation(new Vector3(0,0,0), new Quaternion(0,0,0,0));
+            started = false;
         }
     }
     void MainMovement()
