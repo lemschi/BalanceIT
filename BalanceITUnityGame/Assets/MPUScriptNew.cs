@@ -22,6 +22,7 @@ public class MPUScriptNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(this);
         mpudata_stream.ReadTimeout = 500;
         mpudata_stream.Open(); //Serial data stream wird hergestellt
         streamIsOpen = mpudata_stream.IsOpen;
